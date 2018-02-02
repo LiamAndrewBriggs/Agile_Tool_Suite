@@ -1,0 +1,48 @@
+body {
+    background-image: url('../Images/background_image.jpg');
+    background-size: cover;
+}
+
+.loginForm {
+    position: absolute;
+    width: 300px;
+    height: 275px;
+    z-index: 15;
+    top: 40%;
+    left: 50%;
+    margin: -100px 0 0 -150px;
+    background-color: gainsboro;
+    border: 3px solid green;
+    padding: 10px;
+}
+
+.title {
+    font-size: x-large;
+    font-weight: bolder;
+    padding: 6px 15px;
+    color: #4CAF50;
+    text-align: center;
+}
+
+a {
+    float: right;
+}
+
+p {
+    text-align: center;
+}
+
+.entry {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#submitButton {
+    right: 39%;
+}
+
+.error {
+    color: red;
+    text-align: center;
+}

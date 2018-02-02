@@ -1,0 +1,25 @@
+﻿.button {
+    position: relative;
+    padding: 6px 15px;
+    border: 2px solid #4CAF50;
+    background-color: #4CAF50;
+    color: #fafafa;
+    float: right;
+}
+
+.username {
+    float: right;
+}
+
+.title {
+    font-size: xx-large;
+    font-weight: bolder;
+    padding: 6px 15px;
+    color: #4CAF50;
+    text-align: center;
+}
+
+p {
+    text-align: center;
+}
+

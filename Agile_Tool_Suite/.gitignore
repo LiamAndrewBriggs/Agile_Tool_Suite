@@ -1,0 +1,5 @@
+
+*.ide
+.vs/Agile_Tool_Suite/v15/.suo
+.vs/Agile_Tool_Suite/v15/Server/sqlite3/db.lock
+*.ide
