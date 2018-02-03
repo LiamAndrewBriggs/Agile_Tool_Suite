@@ -1,0 +1,70 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Master.master.cs" Inherits="Agile_Tool_Suite.Master" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title>
+        <asp:ContentPlaceHolder ID="title" runat="server">
+        </asp:ContentPlaceHolder>
+    </title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <script src="Scripts/jquery-3.3.1.js"></script>
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <link href="Css/Side_Bar.css" rel="stylesheet" />
+    <link href="Css/Theme.css" rel="stylesheet" />
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+                   
+        <div class="topnav">
+            <a href="#" class="button" id="menu-toggle">Menu</a>
+            <asp:Button ID="LogoutButton" Text="Log out" runat="server" OnClick="LogoutMethod" class="button" /> 
+        </div>
+     
+        <div id="wrapper">
+           
+            <div id="sidebar-wrapper">
+                <div class="row">
+                    <div class="col-md-6">
+                        <img src="Images/User_Picture.png" id="profile_pic" />
+                    </div>
+
+                    <div class="col-md-4">
+                        <asp:Label ID="userLabel" Text="No User" runat="server" />
+                    </div>
+                </div>
+
+                <ul class="sidebar-nav">
+                    <li><a href="#">Settings</a></li>
+                    <li><a href="#">Stuff</a></li>
+                    <li><a id="Account" href="#">Account</a></li>
+                </ul>
+            </div>
+
+            <div id="page-content-wrapper">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                            </asp:ContentPlaceHolder>
+                        </div>
+                    </div>
+                </div>
+             </div>
+        </div>
+            
+        </div>
+
+           <script>
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("menuDisplaced");
+            });
+        </script>
+
+    </form>
+</body>
+</html>

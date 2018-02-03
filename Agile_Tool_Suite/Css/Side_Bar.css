@@ -1,2 +1,76 @@
 ﻿body {
+    overflow:hidden;
+    background-color: gainsboro;
+}
+
+/* Sidebar*/
+#sidebar-wrapper {
+    z-index: 1;
+    position: absolute;
+    width: 0;
+    height: 100%;
+    overflow: hidden;
+    background: #232222;
+}
+
+/* Main Content*/
+#page-content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+}
+
+/*Change the sidebar to display*/
+#wrapper.menuDisplaced #sidebar-wrapper {
+    width:250px;
+}
+
+#wrapper.menuDisplaced #page-content-wrapper {
+    padding-left:250px;
+}
+
+/*Sidebar styling */
+.sidebar-nav {
+    padding:0;
+    list-style:none;
+}
+
+.sidebar-nav li {
+    text-indent: 20px;
+    line-height: 40px;
+}
+
+.sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: white;
+}
+
+.sidebar-nav li a:hover {
+    background: #4CAF50;
+}
+
+#profile_pic {
+    width: 100px;
+    height: 100px;
+    margin: 10px 10px 35px 10px;
+}
+
+#userLabel {
+    color: white;
+    text-wrap: normal;
+    font-size: large;
+    display:block;
+    margin-top: 35px;
+}
+
+/* Top bar style */
+
+.topnav {
+    background: white;
+    overflow: hidden;
+}
+
+#menu-toggle {
+    float: left;
 }
