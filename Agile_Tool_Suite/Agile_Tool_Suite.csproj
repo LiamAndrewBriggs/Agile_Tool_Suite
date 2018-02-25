@@ -91,6 +91,7 @@
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Css\Account.css" />
+    <Content Include="Css\Main_Theme.css" />
     <Content Include="Master.Master" />
     <None Include="packages.config" />
     <Content Include="Css\Side_Bar.css" />

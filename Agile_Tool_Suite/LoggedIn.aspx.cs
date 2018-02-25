@@ -24,7 +24,7 @@ namespace Agile_Tool_Suite
                 MySql.Data.MySqlClient.MySqlConnection conn = SQL_Helpers.createConnection();
                 conn.Open();
 
-                String queryStr = "SELECT projectID FROM AgileDB.Users WHERE userID=?id";
+                String queryStr = "SELECT projectID FROM AgileDB.UserProjects WHERE userID=?id";
 
                 MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
                 cmd.Parameters.AddWithValue("?id", user);
@@ -38,7 +38,13 @@ namespace Agile_Tool_Suite
                         Response.BufferOutput = true;
                         Response.Redirect("NewUser.aspx", false);
                     }
+                    else
+                    {
+                        Response.BufferOutput = true;
+                        Response.Redirect("AccountPage.aspx", false);
+                    }
                 }
+
             }
         }
 

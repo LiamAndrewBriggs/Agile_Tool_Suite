@@ -23,23 +23,7 @@ namespace Agile_Tool_Suite
 
         protected void addUserToProject()
         {
-            MySql.Data.MySqlClient.MySqlConnection conn = SQL_Helpers.createConnection();
-            conn.Open();
-
-            string queryStr = "SELECT firstName, lastName FROM AgileDB.Users WHERE userID=?id";
-
-            MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
-            cmd.Parameters.AddWithValue("?id", user);
-
-            MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
-
-            while (reader.HasRows && reader.Read())
-            {
-                name = reader.GetString(reader.GetOrdinal("firstName")) + " " 
-                    + reader.GetString(reader.GetOrdinal("lastName"));
-            }
-
-            userLabel.Text = "Welcome, " + name;
+            userLabel.Text = "Welcome! " + SQL_Helpers.getUserName(user);
         }
 
         protected void Search_Project(object sender, EventArgs e)

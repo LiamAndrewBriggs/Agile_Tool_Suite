@@ -6,9 +6,9 @@
 .container {
     position: absolute;
     width: 350px;
-    height: 275px;
+    height: 340px;
     z-index: 15;
-    top: 40%;
+    top: 35%;
     left: 50%;
     margin: -100px 0 0 -150px;
     background-color: gainsboro;

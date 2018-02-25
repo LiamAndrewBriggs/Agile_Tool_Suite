@@ -16,5 +16,54 @@ namespace Agile_Tool_Suite
             return conn;
 
         }
+
+        public static String getUserName(string user)
+        {
+            String name = "";
+
+            MySql.Data.MySqlClient.MySqlConnection conn = createConnection();
+            conn.Open();
+
+            string queryStr = "SELECT firstName, lastName FROM AgileDB.Users WHERE userID=?id";
+
+            MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
+            cmd.Parameters.AddWithValue("?id", user);
+
+            MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.HasRows && reader.Read())
+            {
+                name = reader.GetString(reader.GetOrdinal("firstName")) + " "
+                    + reader.GetString(reader.GetOrdinal("lastName"));
+            }
+
+            conn.Close();
+
+            return name;
+        }
+
+        public static String getEmail(string user)
+        {
+            String email = "";
+
+            MySql.Data.MySqlClient.MySqlConnection conn = createConnection();
+            conn.Open();
+
+            string queryStr = "SELECT email FROM AgileDB.Users WHERE userID=?id";
+
+            MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
+            cmd.Parameters.AddWithValue("?id", user);
+
+            MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.HasRows && reader.Read())
+            {
+                email = reader.GetString(reader.GetOrdinal("email"));
+            }
+
+            conn.Close();
+
+            return email;
+        }
     }
 }

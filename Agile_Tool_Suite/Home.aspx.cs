@@ -43,7 +43,7 @@ namespace Agile_Tool_Suite
                 conn = SQL_Helpers.createConnection();
                 conn.Open();
 
-                queryStr = "SELECT slowHashSalt, userID, firstName, lastName FROM AgileDB.Users WHERE username=?uname";
+                queryStr = "SELECT slowHashSalt, userID FROM AgileDB.Users WHERE username=?uname";
 
                 cmd =  new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
                 cmd.Parameters.AddWithValue("?uname", usernameTextBox.Text);

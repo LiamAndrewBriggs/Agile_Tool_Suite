@@ -71,8 +71,6 @@ namespace Agile_Tool_Suite
             {
                 conn = SQL_Helpers.createConnection();
                 conn.Open();
-                
-                queryStr = "";
 
                 queryStr = "INSERT INTO AgileDB.Users (firstName, lastName, email, userName, slowHashSalt) " +
                     "VALUES(?firstname, ?lastname, ?email, ?username, ?slowhashsalt)";
@@ -88,6 +86,10 @@ namespace Agile_Tool_Suite
 
                 cmd.ExecuteReader();
                 conn.Close();
+
+                Session["uname"] = usernameTextBox.Text;
+                Response.BufferOutput = true;
+                Response.Redirect("LoggedIn.aspx", false);
             }
 
         }

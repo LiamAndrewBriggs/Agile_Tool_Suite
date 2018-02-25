@@ -64,8 +64,18 @@
     margin-top: 35px;
 }
 
-/* Top bar style */
+#label { 
+    color:whitesmoke;
+    padding-left: 5px;
+    padding-bottom: 5px;
+}
 
+#projectList {
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+/* Top bar style */
 .topnav {
     background: white;
     overflow: hidden;
@@ -74,3 +84,4 @@
 #menu-toggle {
     float: left;
 }
+

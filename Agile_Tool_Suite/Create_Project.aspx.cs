@@ -4,16 +4,16 @@ namespace Agile_Tool_Suite
 {
     public partial class Create_Project : System.Web.UI.Page
     {
-        string user = "1";
+        string user;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //user = (string)(Session["uname"]);
-            //if (user == null)
-            //{
-            //    Response.BufferOutput = true;
-            //    Response.Redirect("Home.aspx", false);
-            //}
+            user = (string)(Session["uname"]);
+            if (user == null)
+            {
+                Response.BufferOutput = true;
+                Response.Redirect("Home.aspx", false);
+            }
         }
 
         protected void CreateProject(object sender, EventArgs e)
@@ -83,7 +83,9 @@ namespace Agile_Tool_Suite
 
                     cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
                     cmd.Parameters.AddWithValue("?test", "test");
-                    
+
+                    reader = cmd.ExecuteReader();
+
                     conn.Close();
                     conn.Open();
 
@@ -100,23 +102,24 @@ namespace Agile_Tool_Suite
                     conn.Close();
                     conn.Open();
 
-                    queryStr = "INSERT INTO AgileDB.Project(backlogID) VALUES(?backlog)";
+                    queryStr = "UPDATE AgileDB.Project SET backlogID = ?backlog WHERE projectID = ?project";
 
                     cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
                     cmd.Parameters.AddWithValue("?backlog", "backlogID");
+                    cmd.Parameters.AddWithValue("?project", projectID);
 
                     reader = cmd.ExecuteReader();
 
                     conn.Close();
 
                     Response.BufferOutput = true;
-                    Response.Redirect("Create_Project.aspx", false);
+                    Response.Redirect("AccountPage.aspx", false);
                 }
                 else
                 {
                     conn.Close();
                     Response.BufferOutput = true;
-                    Response.Redirect("Create_Project.aspx", false);
+                    Response.Redirect("AccountPage.aspx", false);
                 }
             }
         }
