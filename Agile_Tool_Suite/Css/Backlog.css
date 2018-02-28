@@ -1,0 +1,90 @@
+﻿.titles {
+    font-size: xx-large;
+    font-weight: bolder;
+    padding: 6px 15px;
+    color: #4CAF50;
+}
+
+/* Hidden content*/
+#backlog-wrapper {
+    z-index: 1;
+    width: 0;
+    height: 100%;
+    overflow: hidden;
+    float: right;
+    margin-top: 15px;  
+}
+
+#backlogContainer {
+    border-bottom: 1px solid #4CAF50;
+    border-left: 1px solid #4CAF50;
+}
+
+#mainContent {
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+}
+
+/*Change the backlog creator to display*/
+#wrapper.createDisplaced #backlog-wrapper {
+    width: 400px;
+}
+
+#wrapper.createDisplaced #mainContent {
+    padding-right: 450px;
+}
+
+.backlogList {
+    margin-top: 35px;
+}
+
+.panel-group {
+    margin-top: 35px;
+}
+
+#backlog {
+    margin-top: 35px;    
+}
+
+/*Styling the table of backlog items*/
+#backlogSort /*, #sortable2*/ {
+    width: 100%;
+    min-height: 20px;
+    list-style-type: none;
+    margin: 0;
+    padding: 5px 0 0 0;
+    float: left;
+    margin-right: 10px;
+}
+
+#backlogSort li /*#sortable2 li*/ {
+    padding: 5px;
+    font-size: 1.2em;
+    border: 1px solid #808080;
+    width: 100%;
+    cursor: move;
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}
+
+#backlogSort li:active {
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+}
+
+#backlogSort li:hover {
+    background-color: #bdc1bf;
+}
+
+/*Style backlog form*/
+
+#closeBacklog {
+    float:left;
+    margin-bottom: 15px;
+}
+
+
+

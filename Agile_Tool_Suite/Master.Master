@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link href="Css/Side_Bar.css" rel="stylesheet" />
     <link href="Css/Main_Theme.css" rel="stylesheet" />
 </head>
@@ -48,7 +49,7 @@
                 <ul class="sidebar-nav">
                     <li><a href="Backlog.aspx">Backlog</a></li>
                     <li><a href="#">Projects</a></li>
-                    <li><a id="Account" href="#">Account</a></li>
+                    <li><a id="Account" href="AccountPage.aspx">Account</a></li>
                 </ul>
             </div>
 
@@ -71,8 +72,8 @@
             $("#menu-toggle").click(function (e) {
                 e.preventDefault();
                 $("#wrapper").toggleClass("menuDisplaced");
-            });
-        </script>
+               });
+            </script>
 
     </form>
 </body>

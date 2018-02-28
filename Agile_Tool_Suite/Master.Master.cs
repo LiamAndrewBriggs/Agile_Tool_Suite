@@ -11,8 +11,12 @@ namespace Agile_Tool_Suite
         protected void Page_Load(object sender, EventArgs e)
         {
             user = (string)(Session["uname"]);
-            Session["project"] = Project.SelectedValue.ToString();
 
+            if (IsPostBack)
+            {
+                Session["project"] = Project.SelectedValue.ToString();
+                string test = Project.SelectedValue.ToString();
+            }
 
             if (user == null)
             {
@@ -79,10 +83,12 @@ namespace Agile_Tool_Suite
 
                 projects.Add(new ListItem("Test", "19"));
 
-                if(Session["project"] == null)
+                if (Session["project"] == null)
                 {
                     Session["project"] = projectIDs[0];
                 }
+
+                string test = (string)(Session["project"]);
 
                 conn.Close();
             }
@@ -93,6 +99,7 @@ namespace Agile_Tool_Suite
         protected void LogoutMethod(object sender, EventArgs e)
         {
             Session["uname"] = null;
+            Session["project"] = null;
             Session.Abandon();
             Response.BufferOutput = true;
             Response.Redirect("Home.aspx", false);

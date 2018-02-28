@@ -57,3 +57,5 @@ C:\Users\User\Google Drive\Uni Work\Year 3\Project\Agile_Tool_Suite\Agile_Tool_S
 C:\Users\User\Google Drive\Uni Work\Year 3\Project\Agile_Tool_Suite\Agile_Tool_Suite\bin\MySql.Data.dll
 C:\Users\User\Google Drive\Uni Work\Year 3\Project\Agile_Tool_Suite\Agile_Tool_Suite\bin\MySql.Data.xml
 C:\Users\User\Google Drive\Uni Work\Year 3\Project\Agile_Tool_Suite\Agile_Tool_Suite\obj\Debug\Agile_Tool_Suite.csprojResolveAssemblyReference.cache
+C:\Users\User\Google Drive\Uni Work\Year 3\Project\Agile_Tool_Suite\Agile_Tool_Suite\bin\Google.Protobuf.dll
+C:\Users\User\Google Drive\Uni Work\Year 3\Project\Agile_Tool_Suite\Agile_Tool_Suite\bin\Google.Protobuf.xml
