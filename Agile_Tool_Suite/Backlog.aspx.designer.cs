@@ -40,6 +40,24 @@ namespace Agile_Tool_Suite {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl backlogList;
         
         /// <summary>
+        /// hf1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hf1;
+        
+        /// <summary>
+        /// viewbtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button viewbtn;
+        
+        /// <summary>
         /// backlogItemName control.
         /// </summary>
         /// <remarks>

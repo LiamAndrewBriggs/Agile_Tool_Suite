@@ -7,7 +7,6 @@
     <link href="Css/Theme.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    
     <div id="wrapper">
         <div id="mainContent">
             <div id="sprints">
@@ -30,6 +29,10 @@
                     </ul>--%>
                 </div>
             </div>
+
+            <asp:HiddenField ID="hf1" runat="server" Value="eswaran welcome" />
+            <asp:Button ID = "viewbtn" runat = "server" OnClick = "viewBacklogItem" style = "display:none" />
+            
         </div>
 
         <div id="backlog-wrapper">
@@ -60,9 +63,6 @@
                             <asp:TextBox ID="backlogItemDescription" TextMode="multiline" width="100%" Rows="3" style='margin-top:10px; margin-bottom:10px; resize: none; overflow:hidden; font-size:15px; ' 
                                 runat="server" onkeydown="setHeight(this);" Placeholder="Describe what this story item should accomplish in more detail" />
 
-
-                            
-                            
                             <button class="button" id="closeBacklog">Close</button>
                             <asp:Button ID="registerBacklogButton" Text="Save" runat="server" OnClick="createBacklogItem" class="button" />
                          </div>
@@ -72,19 +72,45 @@
     </div>
 
     <script>
-        $("#createBacklogItem, #closeBacklog, #registerBacklogButton").click(function (e) {
+        $("#createBacklogItem, #registerBacklogButton, #storyInfo").click(function (e) {
+            e.preventDefault();
+
+            if (this.getAttribute("id") == 'storyInfo') {
+                var id = this.getAttribute("data-id");
+                document.getElementById('<%=hf1.ClientID%>').value = id;
+                $('#<%= viewbtn.ClientID %>').click();
+            }
+            else {
+                $("#wrapper").toggleClass("createDisplaced", true);
+            }
+            
+        });
+
+        $("#closeBacklog").click(function (e) {
                 e.preventDefault();
                 $("#wrapper").toggleClass("createDisplaced");
-        });
+                document.getElementById('<%=backlogItemName.ClientID%>').value = "";
+                document.getElementById('<%=backlogItemStatus.ClientID%>').value = "";
+                document.getElementById('<%=backlogItemStoryPoints.ClientID%>').value = "";
+                document.getElementById('<%=backlogItemDescription.ClientID%>').value = "";
+            });
 
-            $(function () {
-                $("#backlogSort, #sortable2").sortable({
-                    connectWith: ".connectedSortable"
+
+        $(function () {
+            $("#backlogSort, #sortable2").sortable({
+                connectWith: ".connectedSortable"
                 }).disableSelection();
-        });
+            });
 
-            function setHeight(txtdesc) {
-                txtdesc.style.height = txtdesc.scrollHeight + "px";
+        function setHeight(txtdesc) {
+            txtdesc.style.height = txtdesc.scrollHeight + "px";
+        }
+
+        function codeAddress() {
+            if (document.getElementById('<%=backlogItemName.ClientID%>').value != '') {
+                $("#wrapper").toggleClass("createDisplaced", true);
             }
+        }
+        window.onload = codeAddress;
     </script>
 </asp:Content>

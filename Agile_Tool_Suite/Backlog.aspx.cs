@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 
 namespace Agile_Tool_Suite
 {
@@ -92,6 +93,12 @@ namespace Agile_Tool_Suite
             sprintAccordian.Controls.Add(panel);
         }
 
+        protected void createSprintButton(object sender, EventArgs e)
+        {
+
+        }
+
+
         private void getBacklog()
         {
             HtmlGenericControl list = new HtmlGenericControl("ul");
@@ -116,7 +123,7 @@ namespace Agile_Tool_Suite
 
             conn.Close();
 
-            foreach(string storyID in backlogStories)
+            foreach (string storyID in backlogStories)
             {
                 conn.Open();
 
@@ -131,7 +138,8 @@ namespace Agile_Tool_Suite
                 {
                     HtmlGenericControl item = new HtmlGenericControl("li");
                     item.Attributes.Add("class", "ui-state-default");
-                    item.Attributes.Add("id", storyID);
+                    item.Attributes.Add("id", "storyInfo");
+                    item.Attributes.Add("data-id", storyID);
                     item.InnerText = reader.GetString(reader.GetOrdinal("storyName"));
 
                     list.Controls.Add(item);
@@ -141,11 +149,6 @@ namespace Agile_Tool_Suite
             }
 
             backlogList.Controls.Add(list);
-        }
-        
-        protected void createSprintButton(object sender, EventArgs e)
-        {
-
         }
 
         protected void createBacklogItem(object sender, EventArgs e)
@@ -196,6 +199,30 @@ namespace Agile_Tool_Suite
             backlogItemDescription.Text = "";
 
             Response.Redirect(Request.RawUrl);
+        }
+
+        protected void viewBacklogItem(object sender, EventArgs e)
+        {
+            string storyID = hf1.Value;
+
+            conn = SQL_Helpers.createConnection();
+            conn.Open();
+
+            queryStr = "SELECT * FROM AgileDB.Story WHERE storyID=?id";
+
+            cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
+            cmd.Parameters.AddWithValue("?id", storyID);
+            reader = cmd.ExecuteReader();
+
+            while (reader.HasRows && reader.Read())
+            {
+                backlogItemName.Text = reader.GetString(reader.GetOrdinal("storyName"));
+                backlogItemStatus.SelectedValue = reader.GetString(reader.GetOrdinal("storyStatus"));
+                backlogItemStoryPoints.SelectedValue = reader.GetString(reader.GetOrdinal("storyPoints"));
+                backlogItemDescription.Text = reader.GetString(reader.GetOrdinal("storyDetail"));
+            }
+
+            conn.Close();
         }
     }
 }
