@@ -14,8 +14,8 @@ namespace Agile_Tool_Suite
 
             if (IsPostBack)
             {
-                Session["project"] = Project.SelectedValue.ToString();
-                string test = Project.SelectedValue.ToString();
+                Session["project"] = project.SelectedValue.ToString();
+                string test = project.SelectedValue.ToString();
             }
 
             if (user == null)
@@ -35,11 +35,11 @@ namespace Agile_Tool_Suite
 
             List<ListItem>  projectItems = getProjects();
 
-            Project.Items.Clear();
+            project.Items.Clear();
 
-            Project.Items.AddRange(projectItems.ToArray());
+            project.Items.AddRange(projectItems.ToArray());
 
-            Project.SelectedValue = (string)(Session["project"]);
+            project.SelectedValue = (string)(Session["project"]);
         }
 
         List<ListItem> getProjects()
@@ -50,7 +50,7 @@ namespace Agile_Tool_Suite
             MySql.Data.MySqlClient.MySqlConnection conn = SQL_Helpers.createConnection();
             conn.Open();
 
-            string queryStr = "SELECT projectID FROM AgileDB.UserProjects WHERE userID=?id";
+            string queryStr = "SELECT projectID FROM agiledb.userprojects WHERE userID=?id";
 
             MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
             cmd.Parameters.AddWithValue("?id", user);
@@ -69,7 +69,7 @@ namespace Agile_Tool_Suite
                 conn = SQL_Helpers.createConnection();
                 conn.Open();
 
-                queryStr = "SELECT projectName FROM AgileDB.Project WHERE projectID=?id";
+                queryStr = "SELECT projectName FROM agiledb.project WHERE projectID=?id";
 
                 cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
                 cmd.Parameters.AddWithValue("?id", proj);

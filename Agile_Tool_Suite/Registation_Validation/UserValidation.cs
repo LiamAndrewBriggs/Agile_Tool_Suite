@@ -20,7 +20,7 @@ namespace Agile_Tool_Suite
 
             conn = new MySql.Data.MySqlClient.MySqlConnection(connString);
             conn.Open();
-            queryStr = "SELECT email FROM AgileDB.Users WHERE email=?email";
+            queryStr = "SELECT email FROM agiledb.Users WHERE email=?email";
 
             cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
             cmd.Parameters.AddWithValue("?email", email);
@@ -43,7 +43,7 @@ namespace Agile_Tool_Suite
 
             conn = new MySql.Data.MySqlClient.MySqlConnection(connString);
             conn.Open();
-            queryStr = "SELECT username FROM AgileDB.Users WHERE username=?uname";
+            queryStr = "SELECT username FROM agiledb.Users WHERE username=?uname";
 
             cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
             cmd.Parameters.AddWithValue("?uname", username);

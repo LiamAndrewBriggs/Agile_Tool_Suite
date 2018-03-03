@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="Backlog.aspx.cs" Inherits="Agile_Tool_Suite.Backlog" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="Backlog.aspx.cs" Inherits="Agile_Tool_Suite.Backlog" validateRequest="false" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="title" runat="server">
     Backlog
 </asp:Content>
@@ -30,8 +30,10 @@
                 </div>
             </div>
 
-            <asp:HiddenField ID="hf1" runat="server" Value="eswaran welcome" />
+            <asp:HiddenField ID="backlogItemhf" runat="server" Value="null" />
+            <asp:HiddenField ID="backlogOrderhf" runat="server" Value="null" />
             <asp:Button ID = "viewbtn" runat = "server" OnClick = "viewBacklogItem" style = "display:none" />
+            <asp:Button ID = "destroySessionData" runat = "server" OnClick = "destroySession" style = "display:none" />
             
         </div>
 
@@ -77,7 +79,8 @@
 
             if (this.getAttribute("id") == 'storyInfo') {
                 var id = this.getAttribute("data-id");
-                document.getElementById('<%=hf1.ClientID%>').value = id;
+                document.getElementById('<%=backlogItemhf.ClientID%>').value = id;
+                setOrder();
                 $('#<%= viewbtn.ClientID %>').click();
             }
             else {
@@ -87,13 +90,18 @@
         });
 
         $("#closeBacklog").click(function (e) {
-                e.preventDefault();
-                $("#wrapper").toggleClass("createDisplaced");
-                document.getElementById('<%=backlogItemName.ClientID%>').value = "";
-                document.getElementById('<%=backlogItemStatus.ClientID%>').value = "";
-                document.getElementById('<%=backlogItemStoryPoints.ClientID%>').value = "";
-                document.getElementById('<%=backlogItemDescription.ClientID%>').value = "";
-            });
+            e.preventDefault();
+
+            setOrder();
+
+            $("#wrapper").toggleClass("createDisplaced");
+            document.getElementById('<%=backlogItemName.ClientID%>').value = "";
+            document.getElementById('<%=backlogItemStatus.ClientID%>').value = "";
+            document.getElementById('<%=backlogItemStoryPoints.ClientID%>').value = "";
+            document.getElementById('<%=backlogItemDescription.ClientID%>').value = "";
+            $('#<%= destroySessionData.ClientID %>').click();
+
+        });
 
 
         $(function () {
@@ -104,6 +112,11 @@
 
         function setHeight(txtdesc) {
             txtdesc.style.height = txtdesc.scrollHeight + "px";
+        }
+
+        function setOrder() {
+            document.getElementById('<%=backlogOrderhf.ClientID%>').value = $("#backlogSort").html();
+
         }
 
         function codeAddress() {

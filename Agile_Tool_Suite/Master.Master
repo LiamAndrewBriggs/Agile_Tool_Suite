@@ -39,11 +39,11 @@
                     </div>
                 </div>
 
-                <p id="label"> Selected Project: </p>
-                <br />
+                <p id="label"> Selected project: </p>
+                <br /><br />
 
                 <div id="projectList">
-                    <asp:DropDownList AutoPostBack="true" ID="Project" class="info" runat="server"> </asp:DropDownList>
+                    <asp:DropDownList AutoPostBack="true" ID="project" class="info" runat="server"> </asp:DropDownList>
                 </div>
 
                 <ul class="sidebar-nav">

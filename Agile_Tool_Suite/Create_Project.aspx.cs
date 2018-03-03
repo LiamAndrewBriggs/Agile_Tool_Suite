@@ -30,7 +30,7 @@ namespace Agile_Tool_Suite
                 MySql.Data.MySqlClient.MySqlConnection conn = SQL_Helpers.createConnection();
                 conn.Open();
                 
-                string queryStr = "INSERT INTO AgileDB.Project(projectName, primaryMethodology, projectCreator) VALUES(?name, ?method, ?userName)";
+                string queryStr = "INSERT INTO agiledb.project(projectName, primaryMethodology, projectCreator) VALUES(?name, ?method, ?userName)";
 
                 MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
                 cmd.Parameters.AddWithValue("?name", name);
@@ -56,7 +56,7 @@ namespace Agile_Tool_Suite
 
                     conn.Open();
 
-                    queryStr = "SELECT projectID FROM AgileDB.Project ORDER BY projectID DESC LIMIT 1";
+                    queryStr = "SELECT projectID FROM agiledb.project ORDER BY projectID DESC LIMIT 1";
 
                     cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
                     reader = cmd.ExecuteReader();
@@ -69,7 +69,7 @@ namespace Agile_Tool_Suite
                     conn.Close();
                     conn.Open();
 
-                    queryStr = "INSERT INTO AgileDB.UserProjects(userID, projectID) VALUES(?user, ?project)";
+                    queryStr = "INSERT INTO agiledb.userprojects(userID, projectID) VALUES(?user, ?project)";
 
                     cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
                     cmd.Parameters.AddWithValue("?project", projectID);
@@ -79,7 +79,7 @@ namespace Agile_Tool_Suite
                     conn.Close();
                     conn.Open();
 
-                    queryStr = "INSERT INTO AgileDB.Backlog(backlogtest) VALUES(?test)";
+                    queryStr = "INSERT INTO agiledb.backlog(backlogtest) VALUES(?test)";
 
                     cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
                     cmd.Parameters.AddWithValue("?test", "test");
@@ -89,7 +89,7 @@ namespace Agile_Tool_Suite
                     conn.Close();
                     conn.Open();
 
-                    queryStr = "SELECT backlogID FROM AgileDB.Backlog ORDER BY backlogID DESC LIMIT 1";
+                    queryStr = "SELECT backlogID FROM agiledb.backlog ORDER BY backlogID DESC LIMIT 1";
 
                     cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
                     reader = cmd.ExecuteReader();
@@ -102,10 +102,10 @@ namespace Agile_Tool_Suite
                     conn.Close();
                     conn.Open();
 
-                    queryStr = "UPDATE AgileDB.Project SET backlogID = ?backlog WHERE projectID = ?project";
+                    queryStr = "UPDATE agiledb.project SET backlogID = ?backlog WHERE projectID = ?project";
 
                     cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
-                    cmd.Parameters.AddWithValue("?backlog", "backlogID");
+                    cmd.Parameters.AddWithValue("?backlog", backlogID);
                     cmd.Parameters.AddWithValue("?project", projectID);
 
                     reader = cmd.ExecuteReader();

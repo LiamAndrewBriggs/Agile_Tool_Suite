@@ -68,7 +68,7 @@ namespace Agile_Tool_Suite
                     conn = SQL_Helpers.createConnection();
                     conn.Open();
 
-                    queryStr = "UPDATE AgileDB.Users SET firstName = ?firstname,  lastName = ?lastname WHERE userID=?id";
+                    queryStr = "UPDATE agiledb.users SET firstName = ?firstname,  lastName = ?lastname WHERE userID=?id";
 
                     cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
                     cmd.Parameters.AddWithValue("?firstname", firstnameTextBox.Text);
@@ -101,7 +101,7 @@ namespace Agile_Tool_Suite
                     conn = SQL_Helpers.createConnection();
                     conn.Open();
 
-                    queryStr = "UPDATE AgileDB.Users SET email = ?email WHERE userID=?id";
+                    queryStr = "UPDATE agiledb.Users SET email = ?email WHERE userID=?id";
 
                     cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
                     cmd.Parameters.AddWithValue("?email", firstnameTextBox.Text);
@@ -122,7 +122,7 @@ namespace Agile_Tool_Suite
                 conn = SQL_Helpers.createConnection();
                 conn.Open();
 
-                queryStr = "SELECT slowHashSalt FROM AgileDB.Users WHERE userID=?id";
+                queryStr = "SELECT slowHashSalt FROM agiledb.Users WHERE userID=?id";
 
                 cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
                 cmd.Parameters.AddWithValue("?id", user);
@@ -155,7 +155,7 @@ namespace Agile_Tool_Suite
                         conn = SQL_Helpers.createConnection();
                         conn.Open();
 
-                        queryStr = "UPDATE AgileDB.Users SET slowHashSalt = ?slowHashSalt WHERE userID=?id";
+                        queryStr = "UPDATE agiledb.Users SET slowHashSalt = ?slowHashSalt WHERE userID=?id";
 
                         cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
                         cmd.Parameters.AddWithValue("?id", firstnameTextBox.Text);

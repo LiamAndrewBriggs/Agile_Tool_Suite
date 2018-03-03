@@ -11,6 +11,7 @@ namespace Agile_Tool_Suite
     {
         MySql.Data.MySqlClient.MySqlConnection conn;
         MySql.Data.MySqlClient.MySqlCommand cmd;
+        MySql.Data.MySqlClient.MySqlDataReader reader;
         string queryStr;
 
 
@@ -72,7 +73,7 @@ namespace Agile_Tool_Suite
                 conn = SQL_Helpers.createConnection();
                 conn.Open();
 
-                queryStr = "INSERT INTO AgileDB.Users (firstName, lastName, email, userName, slowHashSalt) " +
+                queryStr = "INSERT INTO agiledb.Users (firstName, lastName, email, userName, slowHashSalt) " +
                     "VALUES(?firstname, ?lastname, ?email, ?username, ?slowhashsalt)";
 
                 cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
@@ -87,7 +88,18 @@ namespace Agile_Tool_Suite
                 cmd.ExecuteReader();
                 conn.Close();
 
-                Session["uname"] = usernameTextBox.Text;
+                queryStr = "SELECT userID FROM agiledb.users ORDER BY userID DESC LIMIT 1";
+
+                cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
+                reader = cmd.ExecuteReader();
+
+                while (reader.HasRows && reader.Read())
+                {
+                    Session["uname"] = reader.GetString(reader.GetOrdinal("userID"));
+                }
+
+                conn.Close();
+
                 Response.BufferOutput = true;
                 Response.Redirect("LoggedIn.aspx", false);
             }

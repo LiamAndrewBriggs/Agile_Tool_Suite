@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Create Project</title>
+    <title>Create project</title>
     <link href="Css/Create_Project.css" rel="stylesheet" />
     <link href="Css/Theme.css" rel="stylesheet" />
 </head>

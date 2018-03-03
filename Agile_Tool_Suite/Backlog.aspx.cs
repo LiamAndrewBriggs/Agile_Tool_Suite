@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
@@ -7,20 +11,41 @@ namespace Agile_Tool_Suite
 {
     public partial class Backlog : System.Web.UI.Page
     {
+        //Session information
         private string user;
         private string project;
         private string backlog;
+        private string story;
 
-
+        //SQL information
         MySql.Data.MySqlClient.MySqlConnection conn;
         MySql.Data.MySqlClient.MySqlCommand cmd;
         MySql.Data.MySqlClient.MySqlDataReader reader;
         string queryStr;
 
+        //local variables 
+        private string editStory = "false";
+        private string editStoryID;
+        private int backlogSize;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             user = (string)(Session["uname"]);
             project = (string)(Session["project"]);
+            story = (string)(Session["storyInfo"]);
+
+
+            if (story == null)
+            {
+                editStory = "false";
+            }
+            else
+            {
+                editStory = "true";
+                editStoryID = story;
+            }
+
+
             if (user == null)
             {
                 Response.BufferOutput = true;
@@ -45,7 +70,7 @@ namespace Agile_Tool_Suite
             conn = SQL_Helpers.createConnection();
             conn.Open();
 
-            queryStr = "SELECT backlogID FROM AgileDB.Project WHERE projectID=?projid";
+            queryStr = "SELECT backlogID FROM agiledb.project WHERE projectID=?projid";
 
             cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
             cmd.Parameters.AddWithValue("?projid", project);
@@ -110,7 +135,7 @@ namespace Agile_Tool_Suite
 
             List<string> backlogStories = new List<string>();
 
-            queryStr = "SELECT storyID FROM AgileDB.BacklogStories WHERE backlogID=?id";
+            queryStr = "SELECT storyID FROM agiledb.backlogstories WHERE backlogID=?id ORDER BY backlogPriority ASC";
 
             cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
             cmd.Parameters.AddWithValue("?id", backlog);
@@ -123,11 +148,13 @@ namespace Agile_Tool_Suite
 
             conn.Close();
 
+            backlogSize = backlogStories.Count;
+
             foreach (string storyID in backlogStories)
             {
                 conn.Open();
 
-                queryStr = "SELECT storyName FROM AgileDB.Story WHERE storyID=?id";
+                queryStr = "SELECT storyName FROM agiledb.story WHERE storyID=?id";
 
                 cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
                 cmd.Parameters.AddWithValue("?id", storyID);
@@ -153,62 +180,91 @@ namespace Agile_Tool_Suite
 
         protected void createBacklogItem(object sender, EventArgs e)
         {
-            conn = SQL_Helpers.createConnection();
-            conn.Open();
-
-            queryStr = "INSERT INTO AgileDB.Story (storyName, storyStatus, storyPoints, storyDetail) " +
-                "VALUES(?name, ?status, ?points, ?detail)";
-
-            cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
-            cmd.Parameters.AddWithValue("?name", backlogItemName.Text);
-            cmd.Parameters.AddWithValue("?status", backlogItemStatus.SelectedValue);
-            cmd.Parameters.AddWithValue("?points", backlogItemStoryPoints.SelectedValue);
-            cmd.Parameters.AddWithValue("?detail", backlogItemDescription.Text);
-
-            cmd.ExecuteReader();
-            conn.Close();
-            conn.Open();
-
-            string storyID = "";
-
-            queryStr = "SELECT storyID FROM AgileDB.Story ORDER BY storyID DESC LIMIT 1";
-
-            cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
-            reader = cmd.ExecuteReader();
-
-            while (reader.HasRows && reader.Read())
+            if (editStory == "false")
             {
-                storyID = reader.GetString(reader.GetOrdinal("storyID"));
+                conn = SQL_Helpers.createConnection();
+                conn.Open();
+
+                queryStr = "INSERT INTO agiledb.story (storyName, storyStatus, storyPoints, storyDetail) " +
+                    "VALUES(?name, ?status, ?points, ?detail)";
+
+                cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
+                cmd.Parameters.AddWithValue("?name", backlogItemName.Text);
+                cmd.Parameters.AddWithValue("?status", backlogItemStatus.SelectedValue);
+                cmd.Parameters.AddWithValue("?points", backlogItemStoryPoints.SelectedValue);
+                cmd.Parameters.AddWithValue("?detail", backlogItemDescription.Text);
+
+                cmd.ExecuteReader();
+                conn.Close();
+
+                conn.Open();
+
+                string storyID = "";
+
+                queryStr = "SELECT storyID FROM agiledb.story ORDER BY storyID DESC LIMIT 1";
+
+                cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
+                reader = cmd.ExecuteReader();
+
+                while (reader.HasRows && reader.Read())
+                {
+                    storyID = reader.GetString(reader.GetOrdinal("storyID"));
+                }
+
+                conn.Close();
+                conn.Open();
+
+                queryStr = "INSERT INTO agiledb.backlogstories(backlogID, storyID, backlogPriority) VALUES(?backlog, ?story, ?priority)";
+
+                cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
+                cmd.Parameters.AddWithValue("?backlog", backlog);
+                cmd.Parameters.AddWithValue("?story", storyID);
+                cmd.Parameters.AddWithValue("?priority", backlogSize);
+                reader = cmd.ExecuteReader();
+
+                conn.Close();
+
+                backlogItemName.Text = "";
+                backlogItemStatus.SelectedValue = "reset";
+                backlogItemStoryPoints.SelectedValue = "reset";
+                backlogItemDescription.Text = "";
+
+                updateBacklogOrder();
+                Response.Redirect(Request.RawUrl);
             }
+            else
+            {
+                conn = SQL_Helpers.createConnection();
+                conn.Open();
 
-            conn.Close();
-            conn.Open();
+                queryStr = "UPDATE agiledb.story SET storyName = ?name, storyStatus = ?status, storyPoints = ?points, storyDetail = ?detail " +
+                    "WHERE storyID=?id";
 
-            queryStr = "INSERT INTO AgileDB.BacklogStories(backlogID, storyID) VALUES(?backlog, ?story)";
+                cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
+                cmd.Parameters.AddWithValue("?name", backlogItemName.Text);
+                cmd.Parameters.AddWithValue("?status", backlogItemStatus.SelectedValue);
+                cmd.Parameters.AddWithValue("?points", backlogItemStoryPoints.SelectedValue);
+                cmd.Parameters.AddWithValue("?detail", backlogItemDescription.Text);
+                cmd.Parameters.AddWithValue("?id", editStoryID);
 
-            cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
-            cmd.Parameters.AddWithValue("?backlog", backlog);
-            cmd.Parameters.AddWithValue("?story", storyID);
-            reader = cmd.ExecuteReader();
+                cmd.ExecuteReader();
+                conn.Close();
 
-            conn.Close();
-
-            backlogItemName.Text = "";
-            backlogItemStatus.SelectedValue = "reset";
-            backlogItemStoryPoints.SelectedValue = "reset";
-            backlogItemDescription.Text = "";
-
-            Response.Redirect(Request.RawUrl);
+                Session["storyInfo"] = null;
+                updateBacklogOrder();
+                Response.Redirect(Request.RawUrl);
+            }
         }
 
         protected void viewBacklogItem(object sender, EventArgs e)
         {
-            string storyID = hf1.Value;
+            string storyID = backlogItemhf.Value;
+            List<string> storyInfo = new List<string>();
 
             conn = SQL_Helpers.createConnection();
             conn.Open();
 
-            queryStr = "SELECT * FROM AgileDB.Story WHERE storyID=?id";
+            queryStr = "SELECT * FROM agiledb.story WHERE storyID=?id";
 
             cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
             cmd.Parameters.AddWithValue("?id", storyID);
@@ -223,6 +279,63 @@ namespace Agile_Tool_Suite
             }
 
             conn.Close();
+            
+            Session["storyInfo"] = storyID;
+
+            updateBacklogOrder();
+        }
+
+        protected void destroySession(object sender, EventArgs e)
+        {
+            Session["storyInfo"] = null;
+            updateBacklogOrder();
+            Response.Redirect(Request.RawUrl);
+        }
+
+        private void updateBacklogOrder()
+        {
+            string list = backlogOrderhf.Value;
+
+            List<string> matched = new List<string>();
+            int indexStart = 0, indexEnd = 0;
+            bool exit = false;
+            string startString = "data-id=\"";
+            string endString = "\">";
+            while (!exit)
+            {
+                indexStart = list.IndexOf(startString);
+                indexEnd = list.IndexOf(endString);
+                if (indexStart != -1 && indexEnd != -1)
+                {
+                    matched.Add(list.Substring(indexStart + startString.Length,
+                        indexEnd - indexStart - startString.Length));
+                    list = list.Substring(indexEnd + endString.Length);
+                }
+                else
+                    exit = true;
+            }
+
+            int count = 1;
+            
+            foreach (string id in matched)
+            {
+                string storyID = id.Replace("\" style=\"", "");
+
+                conn = SQL_Helpers.createConnection();
+                conn.Open();
+
+                queryStr = "UPDATE agiledb.backlogstories SET backlogPriority = ?priority WHERE storyID=?id";
+
+                cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
+                cmd.Parameters.AddWithValue("?priority", count);
+                cmd.Parameters.AddWithValue("?id", storyID);
+
+                cmd.ExecuteReader();
+                conn.Close();
+                count++;
+            }
+
+
         }
     }
 }
