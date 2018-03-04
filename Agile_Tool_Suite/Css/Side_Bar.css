@@ -1,5 +1,6 @@
 ﻿body {
     overflow:hidden;
+    height:auto;
     background-color: gainsboro;
 }
 
@@ -16,8 +17,11 @@
 /* Main Content*/
 #page-content-wrapper {
     width: 100%;
+    height:95%;
+    overflow-y:auto;
+    overflow-x:hidden;
     position: absolute;
-    padding: 15px;
+    padding: 10px;
 }
 
 /*Change the sidebar to display*/
