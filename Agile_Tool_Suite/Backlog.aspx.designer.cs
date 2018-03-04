@@ -58,6 +58,15 @@ namespace Agile_Tool_Suite {
         protected global::System.Web.UI.WebControls.HiddenField backlogOrderhf;
         
         /// <summary>
+        /// taskIDhf control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField taskIDhf;
+        
+        /// <summary>
         /// viewbtn control.
         /// </summary>
         /// <remarks>
@@ -74,6 +83,15 @@ namespace Agile_Tool_Suite {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button destroySessionData;
+        
+        /// <summary>
+        /// getTaskInfo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button getTaskInfo;
         
         /// <summary>
         /// backlogItemName control.
@@ -110,6 +128,33 @@ namespace Agile_Tool_Suite {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox backlogItemDescription;
+        
+        /// <summary>
+        /// tasklist control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tasklist;
+        
+        /// <summary>
+        /// newTask control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox newTask;
+        
+        /// <summary>
+        /// Button1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button1;
         
         /// <summary>
         /// registerBacklogButton control.

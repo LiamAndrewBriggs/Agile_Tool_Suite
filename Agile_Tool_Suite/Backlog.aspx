@@ -32,8 +32,10 @@
 
             <asp:HiddenField ID="backlogItemhf" runat="server" Value="null" />
             <asp:HiddenField ID="backlogOrderhf" runat="server" Value="null" />
+            <asp:HiddenField ID="taskIDhf" runat="server" Value="null" />
             <asp:Button ID = "viewbtn" runat = "server" OnClick = "viewBacklogItem" style = "display:none" />
             <asp:Button ID = "destroySessionData" runat = "server" OnClick = "destroySession" style = "display:none" />
+            <asp:Button ID = "getTaskInfo" runat = "server" OnClick = "viewTaskItem" style = "display:none" />
             
         </div>
 
@@ -65,16 +67,31 @@
                             <asp:TextBox ID="backlogItemDescription" TextMode="multiline" width="100%" Rows="3" style='margin-top:10px; margin-bottom:10px; resize: none; overflow:hidden; font-size:15px; ' 
                                 runat="server" onkeydown="setHeight(this);" Placeholder="Describe what this story item should accomplish in more detail" />
 
+                            <div id="visable">
+                                <p>Tasks:</p>
+                                <div id="tasklist" class="backlogList" runat="server"> </div>
+                                <asp:Panel runat="server" DefaultButton="Button1">
+                                   <asp:TextBox ID="newTask" runat="server" class="taskEntryBox" placeholder="Enter new task and press enter to save"></asp:TextBox>    
+                                   <asp:Button ID="Button1" runat="server" style="display:none" OnClick="createTask" />
+                                </asp:Panel>
+                                <br /><br />
+                            </div>
+
                             <button class="button" id="closeBacklog">Close</button>
                             <asp:Button ID="registerBacklogButton" Text="Save" runat="server" OnClick="createBacklogItem" class="button" />
                          </div>
+                    </div>
+                    <div class="row" id="taskView">
+                        <div class="col-lg-12">
+                            <header class="title">Task</header>
+                        </div>
                     </div>
             </div>
         </div>
     </div>
 
     <script>
-        $("#createBacklogItem, #registerBacklogButton, #storyInfo").click(function (e) {
+        $("#createBacklogItem, #registerBacklogButton, #storyInfo, #taskInfo").click(function (e) {
             e.preventDefault();
 
             if (this.getAttribute("id") == 'storyInfo') {
@@ -83,8 +100,14 @@
                 setOrder();
                 $('#<%= viewbtn.ClientID %>').click();
             }
+            else if (this.getAttribute("id") == 'taskInfo') {
+                var id = this.getAttribute("data-id");
+                document.getElementById('<%=taskIDhf.ClientID%>').value = id;
+                $('#<%= getTaskInfo.ClientID %>').click();
+            }
             else {
                 $("#wrapper").toggleClass("createDisplaced", true);
+                $('#visable').hide();
             }
             
         });

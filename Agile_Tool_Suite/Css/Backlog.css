@@ -86,5 +86,25 @@
     margin-bottom: 15px;
 }
 
+.taskEntryBox {
+    width: 100%;
+}
 
+#storyList {
+    width: 100%;
+    min-height: 20px;
+    list-style-type: none;
+    margin: 0;
+    padding: 5px 0 0 0;
+    float: left;
+    margin-right: 10px;
+}
+
+#storyList li {
+    padding: 5px;
+    font-size: 1.2em;
+    border: 1px solid #808080;
+    width: 100%;
+
+}
 

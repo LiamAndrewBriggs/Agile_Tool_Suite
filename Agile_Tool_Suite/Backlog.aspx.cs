@@ -282,6 +282,8 @@ namespace Agile_Tool_Suite
             
             Session["storyInfo"] = storyID;
 
+            getTasks();
+
             updateBacklogOrder();
         }
 
@@ -335,6 +337,111 @@ namespace Agile_Tool_Suite
                 count++;
             }
 
+
+        }
+
+        protected void createTask(object sender, EventArgs e)
+        {
+            string storyID = backlogItemhf.Value;
+
+            conn = SQL_Helpers.createConnection();
+            conn.Open();
+
+            queryStr = "INSERT INTO agiledb.task (taskName) VALUES(?name)";
+
+            cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
+            cmd.Parameters.AddWithValue("?name", newTask.Text);
+            
+            cmd.ExecuteReader();
+            conn.Close();
+
+            conn.Open();
+
+            string taskID = "";
+
+            queryStr = "SELECT taskID FROM agiledb.task ORDER BY taskID DESC LIMIT 1";
+
+            cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
+            reader = cmd.ExecuteReader();
+
+            while (reader.HasRows && reader.Read())
+            {
+                taskID = reader.GetString(reader.GetOrdinal("taskID"));
+            }
+
+            conn.Close();
+            conn.Open();
+
+            queryStr = "INSERT INTO agiledb.storytasks(storyID, taskID) VALUES(?story, ?task)";
+
+            cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
+            cmd.Parameters.AddWithValue("?story", storyID);
+            cmd.Parameters.AddWithValue("?task", taskID);
+            reader = cmd.ExecuteReader();
+
+            conn.Close();
+
+            newTask.Text = "";
+
+            getTasks();
+        }
+
+        private void getTasks()
+        {
+            tasklist.InnerHtml = null;
+            string storyID = backlogItemhf.Value;
+
+            HtmlGenericControl list = new HtmlGenericControl("ul");
+            list.Attributes.Add("id", "storyList");
+
+            conn = SQL_Helpers.createConnection();
+            conn.Open();
+
+            List<string> storyTasks = new List<string>();
+
+            queryStr = "SELECT taskID FROM agiledb.storytasks WHERE storyID=?id";
+
+            cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
+            cmd.Parameters.AddWithValue("?id", storyID);
+            reader = cmd.ExecuteReader();
+
+            while (reader.HasRows && reader.Read())
+            {
+                storyTasks.Add(reader.GetString(reader.GetOrdinal("taskID")));
+            }
+
+            conn.Close();
+
+            foreach (string taskID in storyTasks)
+            {
+                conn.Open();
+
+                queryStr = "SELECT taskName FROM agiledb.task WHERE taskID=?id";
+
+                cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
+                cmd.Parameters.AddWithValue("?id", taskID);
+
+                reader = cmd.ExecuteReader();
+
+                while (reader.HasRows && reader.Read())
+                {
+                    HtmlGenericControl item = new HtmlGenericControl("li");
+                    item.Attributes.Add("id", "taskInfo");
+                    item.Attributes.Add("data-id", taskID);
+                    item.InnerText = reader.GetString(reader.GetOrdinal("taskName"));
+
+                    list.Controls.Add(item);
+                }
+
+                conn.Close();
+            }
+
+            tasklist.Controls.Add(list);
+        }
+
+        protected void viewTaskItem(object sender, EventArgs e)
+        {
+            string test = "";
 
         }
     }
