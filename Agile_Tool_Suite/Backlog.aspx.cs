@@ -34,7 +34,6 @@ namespace Agile_Tool_Suite
             project = (string)(Session["project"]);
             story = (string)(Session["storyInfo"]);
 
-
             if (story == null)
             {
                 editStory = "false";
@@ -441,8 +440,53 @@ namespace Agile_Tool_Suite
 
         protected void viewTaskItem(object sender, EventArgs e)
         {
-            string test = "";
+            string name ="", status = "";
 
+            conn = SQL_Helpers.createConnection();
+            conn.Open();
+
+            queryStr = "SELECT * FROM agiledb.task WHERE taskID=?id";
+
+            cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
+            cmd.Parameters.AddWithValue("?id", taskIDhf.Value);
+            reader = cmd.ExecuteReader();
+
+            while (reader.HasRows && reader.Read())
+            {
+                name =  reader.GetString(reader.GetOrdinal("taskName"));
+                status = reader.GetString(reader.GetOrdinal("taskStatus"));
+            }
+
+            taskName.Text = name;
+            taskStatus.SelectedValue = status;
+
+            getTasks();
+        }
+
+        protected void saveTaskItem(object sender, EventArgs e)
+        {
+            if(taskIDhf.Value.Equals("null"))
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alert" + UniqueID, "alert('Please select a task');", true);
+                getTasks();
+            }
+            else
+            {
+                conn = SQL_Helpers.createConnection();
+                conn.Open();
+
+                queryStr = "UPDATE agiledb.task SET taskName = ?name, taskStatus = ?status WHERE taskID=?id";
+
+                cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
+                cmd.Parameters.AddWithValue("?name", taskName.Text);
+                cmd.Parameters.AddWithValue("?status", taskStatus.SelectedValue);
+                cmd.Parameters.AddWithValue("?id", taskIDhf.Value);
+                reader = cmd.ExecuteReader();
+
+                conn.Close();
+
+                getTasks();
+            }
         }
     }
 }

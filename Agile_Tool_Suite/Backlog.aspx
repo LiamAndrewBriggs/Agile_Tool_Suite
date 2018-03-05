@@ -78,25 +78,41 @@
                             </div>
 
                             <button class="button" id="closeBacklog">Close</button>
-                            <asp:Button ID="registerBacklogButton" Text="Save" runat="server" OnClick="createBacklogItem" class="button" />
+                            <asp:Button ID="registerBacklogButton" Text="Save Story" runat="server" OnClick="createBacklogItem" class="button" />
                          </div>
                     </div>
-                    <div class="row" id="taskView">
-                        <div class="col-lg-12">
-                            <header class="title">Task</header>
+                    <div id="taskvisable">
+                        <div class="row" id="taskView">
+                            <div class="col-lg-12">
+                             <header class="title">Story Tasks</header>
+
+                                    <asp:TextBox ID="taskName" runat="server" style="width: 100%" Text="Please selected a task to view details"/>
+
+                                    <div id="space">
+                                        <p class="backlogLabel">Status:</p>
+                                        <asp:DropDownList ID="taskStatus" class="info" runat="server"> 
+                                             <asp:ListItem Text="To Do" Value="toDo"></asp:ListItem>
+                                             <asp:ListItem Text="In Progress" Value="inProgress"></asp:ListItem>
+                                             <asp:ListItem Text="Done" Value="done"></asp:ListItem>
+                                         </asp:DropDownList>
+                                    </div>
+
+                                    <asp:Button ID="saveStoryButton" Text="Save Task" runat="server" OnClick="saveTaskItem" class="button" style="margin-bottom: 20px" />
+                            </div>
+                            </div>
                         </div>
                     </div>
-            </div>
         </div>
     </div>
 
     <script>
         $("#createBacklogItem, #registerBacklogButton, #storyInfo, #taskInfo").click(function (e) {
             e.preventDefault();
-
+            
             if (this.getAttribute("id") == 'storyInfo') {
                 var id = this.getAttribute("data-id");
                 document.getElementById('<%=backlogItemhf.ClientID%>').value = id;
+                document.getElementById('<%=taskIDhf.ClientID%>').value = "null";
                 setOrder();
                 $('#<%= viewbtn.ClientID %>').click();
             }
@@ -108,6 +124,7 @@
             else {
                 $("#wrapper").toggleClass("createDisplaced", true);
                 $('#visable').hide();
+                $('#taskvisable').hide();
             }
             
         });
@@ -117,6 +134,7 @@
 
             setOrder();
 
+            $('#taskvisable').hide();
             $("#wrapper").toggleClass("createDisplaced");
             document.getElementById('<%=backlogItemName.ClientID%>').value = "";
             document.getElementById('<%=backlogItemStatus.ClientID%>').value = "";
