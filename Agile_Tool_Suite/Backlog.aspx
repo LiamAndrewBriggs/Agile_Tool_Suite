@@ -10,32 +10,42 @@
     <div id="wrapper">
         <div id="mainContent">
             <div id="sprints">
-                <asp:Button ID="createSprint" Text="Create Sprint" runat="server" OnClick="createSprintButton" class="button" />
+                <button class="button" id="createSprint">Create Sprint</button>
                 <h2 class="titles">Sprints</h2>
                 <div class="panel-group" id="sprintAccordian" runat="server"> </div>
+                <div id ="sprintInput" class="container-fluid">
+                    <h3 class="titles">Create Sprint</h3>
+                    <button class="button" id="saveSprint">Save Sprint</button>
+                    <div class="container-fluid">
+                    <p>Sprint Length:   </p>
+                        <asp:DropDownList ID="SprintLength" class="info" runat="server"> 
+                            <asp:ListItem Text="1 Week" Value="1"></asp:ListItem>
+                            <asp:ListItem Text="2 Weeks" Value="2"></asp:ListItem>
+                            <asp:ListItem Text="3 Weeks" Value="3"></asp:ListItem>
+                            <asp:ListItem Text="4 Weeks" Value="4"></asp:ListItem>
+                         </asp:DropDownList>
+                    </div>
+                    <div class="container-fluid">
+                        <p>Add Backlog Story To Sprint (drag story from the backlog):</p>
+                        <ul id="sprintCreate" class="connectedSortable"> </ul>
+                    </div>
+                </div>
             </div>
+
             <div id="backlog">
                 <button class="button" id="createBacklogItem">Create Backlog Item</button>
                 <h2 class="titles">Backlog Stories</h2>
-                <div id="backlogList" class="backlogList" runat="server"> 
-
-                     
-                    <%--<ul id="sortable2" class="connectedSortable">
-                      <li class="ui-state-highlight">Item 1</li>
-                      <li class="ui-state-highlight">Item 2</li>
-                      <li class="ui-state-highlight">Item 3</li>
-                      <li class="ui-state-highlight">Item 4</li>
-                      <li class="ui-state-highlight">Item 5</li>
-                    </ul>--%>
-                </div>
+                <div id="backlogList" class="backlogList" runat="server"> </div>
             </div>
 
             <asp:HiddenField ID="backlogItemhf" runat="server" Value="null" />
             <asp:HiddenField ID="backlogOrderhf" runat="server" Value="null" />
             <asp:HiddenField ID="taskIDhf" runat="server" Value="null" />
+            <asp:HiddenField ID="sprintStorieshf" runat="server" Value="null" />
             <asp:Button ID = "viewbtn" runat = "server" OnClick = "viewBacklogItem" style = "display:none" />
             <asp:Button ID = "destroySessionData" runat = "server" OnClick = "destroySession" style = "display:none" />
             <asp:Button ID = "getTaskInfo" runat = "server" OnClick = "viewTaskItem" style = "display:none" />
+            <asp:Button ID = "createSprintButtons" runat = "server" OnClick = "createSprintButton" style = "display:none" />
             
         </div>
 
@@ -129,6 +139,20 @@
             
         });
 
+        $("#createSprint").click(function (e) {
+            e.preventDefault();
+
+            $('#sprintInput').show();
+        });
+
+        $("#saveSprint").click(function (e) {
+            e.preventDefault();
+            $('#sprintInput').hide();
+
+            document.getElementById('<%=sprintStorieshf.ClientID%>').value = $("#sprintCreate").html();
+             $('#<%= createSprintButtons.ClientID %>').click();
+        });
+
         $("#closeBacklog").click(function (e) {
             e.preventDefault();
 
@@ -146,7 +170,7 @@
 
 
         $(function () {
-            $("#backlogSort, #sortable2").sortable({
+            $("#backlogSort, #sprintCreate").sortable({
                 connectWith: ".connectedSortable"
                 }).disableSelection();
             });
@@ -157,7 +181,6 @@
 
         function setOrder() {
             document.getElementById('<%=backlogOrderhf.ClientID%>').value = $("#backlogSort").html();
-
         }
 
         function codeAddress() {

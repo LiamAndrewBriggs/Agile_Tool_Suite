@@ -13,15 +13,6 @@ namespace Agile_Tool_Suite {
     public partial class Backlog {
         
         /// <summary>
-        /// createSprint control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button createSprint;
-        
-        /// <summary>
         /// sprintAccordian control.
         /// </summary>
         /// <remarks>
@@ -29,6 +20,15 @@ namespace Agile_Tool_Suite {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl sprintAccordian;
+        
+        /// <summary>
+        /// SprintLength control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList SprintLength;
         
         /// <summary>
         /// backlogList control.
@@ -67,6 +67,15 @@ namespace Agile_Tool_Suite {
         protected global::System.Web.UI.WebControls.HiddenField taskIDhf;
         
         /// <summary>
+        /// sprintStorieshf control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField sprintStorieshf;
+        
+        /// <summary>
         /// viewbtn control.
         /// </summary>
         /// <remarks>
@@ -92,6 +101,15 @@ namespace Agile_Tool_Suite {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button getTaskInfo;
+        
+        /// <summary>
+        /// createSprintButtons control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button createSprintButtons;
         
         /// <summary>
         /// backlogItemName control.

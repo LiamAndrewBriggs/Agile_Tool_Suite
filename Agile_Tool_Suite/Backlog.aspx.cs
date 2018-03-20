@@ -119,7 +119,96 @@ namespace Agile_Tool_Suite
 
         protected void createSprintButton(object sender, EventArgs e)
         {
+            string list = sprintStorieshf.Value;
 
+            List<string> matched = new List<string>();
+            int indexStart = 0, indexEnd = 0;
+            bool exit = false;
+            string startString = "data-id=\"";
+            string endString = "\">";
+            while (!exit)
+            {
+                indexStart = list.IndexOf(startString);
+                indexEnd = list.IndexOf(endString);
+                if (indexStart != -1 && indexEnd != -1)
+                {
+                    matched.Add(list.Substring(indexStart + startString.Length,
+                        indexEnd - indexStart - startString.Length));
+                    list = list.Substring(indexEnd + endString.Length);
+                }
+                else
+                    exit = true;
+            }
+
+            conn = SQL_Helpers.createConnection();
+            conn.Open();
+
+            queryStr = "INSERT INTO agiledb.sprints (sprintLength) " +
+                "VALUES(?length)";
+
+            cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
+            cmd.Parameters.AddWithValue("?length", SprintLength.SelectedValue);
+
+            cmd.ExecuteReader();
+            conn.Close();
+
+            conn.Open();
+
+            string sprintID = "";
+
+            queryStr = "SELECT sprintID FROM agiledb.sprints ORDER BY sprintID DESC LIMIT 1";
+
+            cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
+            reader = cmd.ExecuteReader();
+
+            while (reader.HasRows && reader.Read())
+            {
+                sprintID = reader.GetString(reader.GetOrdinal("sprintID"));
+            }
+
+            conn.Close();
+
+            conn.Open();
+
+            queryStr = "INSERT INTO agiledb.projectsprints (projectID, sprintID) " +
+                "VALUES(?project, ?sprint)";
+
+            cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
+            cmd.Parameters.AddWithValue("?project", project);
+            cmd.Parameters.AddWithValue("?sprint", sprintID);
+
+            cmd.ExecuteReader();
+            conn.Close();
+
+            foreach (string id in matched)
+            {
+                string storyID = id.Replace("\" style=\"", "");
+
+                conn.Open();
+
+                queryStr = "INSERT INTO agiledb.sprintstories (sprintID, storiesID) " +
+                    "VALUES(?sprint, ?story)";
+
+                cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
+                cmd.Parameters.AddWithValue("?sprint", sprintID);
+                cmd.Parameters.AddWithValue("?story", storyID);
+
+                cmd.ExecuteReader();
+                conn.Close();
+
+                conn.Open();
+
+                queryStr = "UPDATE agiledb.story SET sprintStatus = ?status WHERE storyID=?id";
+
+                cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
+                cmd.Parameters.AddWithValue("?status", "Sprint");
+                cmd.Parameters.AddWithValue("?id", storyID);
+
+                cmd.ExecuteReader();
+                conn.Close();
+            }
+
+            getBacklog();
         }
 
 
@@ -153,10 +242,11 @@ namespace Agile_Tool_Suite
             {
                 conn.Open();
 
-                queryStr = "SELECT storyName FROM agiledb.story WHERE storyID=?id";
+                queryStr = "SELECT storyName FROM agiledb.story WHERE storyID=?id AND sprintStatus=?status";
 
                 cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
                 cmd.Parameters.AddWithValue("?id", storyID);
+                cmd.Parameters.AddWithValue("?status", "Backlog");
 
                 reader = cmd.ExecuteReader();
 
@@ -184,14 +274,15 @@ namespace Agile_Tool_Suite
                 conn = SQL_Helpers.createConnection();
                 conn.Open();
 
-                queryStr = "INSERT INTO agiledb.story (storyName, storyStatus, storyPoints, storyDetail) " +
-                    "VALUES(?name, ?status, ?points, ?detail)";
+                queryStr = "INSERT INTO agiledb.story (storyName, storyStatus, storyPoints, storyDetail, sprintStatus) " +
+                    "VALUES(?name, ?status, ?points, ?detail, ?story)";
 
                 cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
                 cmd.Parameters.AddWithValue("?name", backlogItemName.Text);
                 cmd.Parameters.AddWithValue("?status", backlogItemStatus.SelectedValue);
                 cmd.Parameters.AddWithValue("?points", backlogItemStoryPoints.SelectedValue);
                 cmd.Parameters.AddWithValue("?detail", backlogItemDescription.Text);
+                cmd.Parameters.AddWithValue("?story", "Backlog");
 
                 cmd.ExecuteReader();
                 conn.Close();

@@ -5,6 +5,13 @@
     color: #4CAF50;
 }
 
+/*Sprint content*/
+#sprintInput {
+    display: none;
+    margin-bottom: 100px;
+    border-top: 1px solid #4CAF50;
+}
+
 /* Hidden content*/
 #backlog-wrapper {
     z-index: 1;
@@ -12,7 +19,7 @@
     height: 100%;
     overflow: hidden;
     float: right;
-    margin-top: 15px;  
+    margin-top: 15px;
 }
 
 #backlogContainer {
@@ -48,17 +55,22 @@
 }
 
 /*Styling the table of backlog items*/
-#backlogSort /*, #sortable2*/ {
+#backlogSort, #sprintCreate {
     width: 100%;
     min-height: 20px;
-    list-style-type: none;
+    list-style: none;
     margin: 0;
     padding: 5px 0 0 0;
     float: left;
     margin-right: 10px;
+    padding-bottom: 15px;
 }
 
-#backlogSort li /*#sortable2 li*/ {
+#sprintCreate {
+    margin-bottom: 10px;
+}
+
+#backlogSort li, #sprintCreate li {
     padding: 5px;
     font-size: 1.2em;
     border: 1px solid #808080;
