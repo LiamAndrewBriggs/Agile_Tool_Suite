@@ -5,6 +5,11 @@
     color: #4CAF50;
 }
 
+#startSprint {
+    color: white;
+    background-color: #4CAF50;
+}
+
 /*Sprint content*/
 #sprintInput {
     display: none;
@@ -55,7 +60,7 @@
 }
 
 /*Styling the table of backlog items*/
-#backlogSort, #sprintCreate {
+#backlogSort, #sprintCreate, #sprintView {
     width: 100%;
     min-height: 20px;
     list-style: none;
@@ -81,13 +86,21 @@
     cursor: -webkit-grab;
 }
 
-#backlogSort li:active {
+#sprintView li {
+    padding: 5px;
+    font-size: 1.2em;
+    border: 1px solid #808080;
+    width: 100%;
+    cursor: pointer;
+}
+
+#backlogSort li:active, #sprintCreate li:active {
     cursor: grabbing;
     cursor: -moz-grabbing;
     cursor: -webkit-grabbing;
 }
 
-#backlogSort li:hover {
+#backlogSort li:hover, #sprintCreate li:hover, #sprintView li:hover {
     background-color: #bdc1bf;
 }
 

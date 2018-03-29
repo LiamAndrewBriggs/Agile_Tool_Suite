@@ -12,6 +12,11 @@
             <div id="sprints">
                 <button class="button" id="createSprint">Create Sprint</button>
                 <h2 class="titles">Sprints</h2>
+                <div id="startSprintHide" runat="server">
+                    <p style="margin-right:15px; color:#4CAF50; font-size:large">Chose the next sprint to start: </p>
+                    <asp:DropDownList ID="sprintList" class="info" runat="server">  </asp:DropDownList>
+                    <asp:Button ID="startSprint" runat = "server" OnClick = "startSprintButton" Text="Start Sprint" />
+                </div>
                 <div class="panel-group" id="sprintAccordian" runat="server"> </div>
                 <div id ="sprintInput" class="container-fluid">
                     <h3 class="titles">Create Sprint</h3>
@@ -48,6 +53,7 @@
             <asp:Button ID = "createSprintButtons" runat = "server" OnClick = "createSprintButton" style = "display:none" />
             
         </div>
+     </div>
 
         <div id="backlog-wrapper">
             <div class="container-fluid" id ="backlogContainer">
@@ -58,14 +64,14 @@
                             <asp:TextBox ID="backlogItemName" TextMode="multiline" width="100%" Rows="2" style='margin-top:10px; margin-bottom:10px; resize: none; overflow:hidden; font-size:20px; ' 
                                 runat="server" onkeydown="setHeight(this);" Placeholder="As a *insert role here* I'd like to *insert action to be completed*"/>
                             
-                            <p class="backlogLabel">Status:</p>
+                            <p style="margin-right:15px;">Status:</p>
                             <asp:DropDownList ID="backlogItemStatus" class="info" runat="server"> 
                                  <asp:ListItem Text="To Do" Value="toDo"></asp:ListItem>
                                  <asp:ListItem Text="In Progress" Value="inProgress"></asp:ListItem>
                                  <asp:ListItem Text="Done" Value="done"></asp:ListItem>
                              </asp:DropDownList>
                             <br /><br />
-                            <p>Story Points:</p>
+                            <p style="margin-right:15px;">Story Points:</p>
                             <asp:DropDownList ID="backlogItemStoryPoints" class="info" runat="server"> 
                                 <asp:ListItem Text="1 - Extra Small" Value="1"></asp:ListItem>
                                 <asp:ListItem Text="2 - Small" Value="2"></asp:ListItem>
@@ -113,11 +119,13 @@
                         </div>
                     </div>
         </div>
-    </div>
+    
 
     <script>
         $("#createBacklogItem, #registerBacklogButton, #storyInfo, #taskInfo").click(function (e) {
             e.preventDefault();
+
+            document.getElementById('<%=taskName.ClientID%>').value = "";
             
             if (this.getAttribute("id") == 'storyInfo') {
                 var id = this.getAttribute("data-id");
@@ -164,6 +172,7 @@
             document.getElementById('<%=backlogItemStatus.ClientID%>').value = "";
             document.getElementById('<%=backlogItemStoryPoints.ClientID%>').value = "";
             document.getElementById('<%=backlogItemDescription.ClientID%>').value = "";
+            document.getElementById('<%=taskName.ClientID%>').value = "";
             $('#<%= destroySessionData.ClientID %>').click();
 
         });

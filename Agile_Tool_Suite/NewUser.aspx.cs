@@ -5,7 +5,6 @@ namespace Agile_Tool_Suite
     public partial class NewUser : System.Web.UI.Page
     {
         string user;
-        string name;
 
         protected void Page_Load(object sender, EventArgs e)
         {

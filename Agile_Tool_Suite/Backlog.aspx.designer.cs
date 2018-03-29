@@ -13,6 +13,33 @@ namespace Agile_Tool_Suite {
     public partial class Backlog {
         
         /// <summary>
+        /// startSprintHide control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl startSprintHide;
+        
+        /// <summary>
+        /// sprintList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList sprintList;
+        
+        /// <summary>
+        /// startSprint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button startSprint;
+        
+        /// <summary>
         /// sprintAccordian control.
         /// </summary>
         /// <remarks>
