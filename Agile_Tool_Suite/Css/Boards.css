@@ -1,0 +1,65 @@
+﻿.titles {
+    font-size: xx-large;
+    font-weight: bolder;
+    padding: 6px 15px;
+    color: #4CAF50;
+}
+
+.title {
+    font-size: large;
+    font-weight: bolder;
+    padding: 6px 15px;
+    color: #4CAF50;
+}
+
+#table {
+    margin-top: 15px;
+}
+
+[class*="col-"] {
+    margin-bottom: -99999px;
+    padding-bottom: 99999px;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    text-align: center;
+}
+
+.row {
+    overflow: hidden;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    text-align: center;
+}
+
+/*Styling the table of backlog items*/
+#toDo, #inProgress, #done {
+    width: 100%;
+    min-height: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 5px 0 0 0;
+    float: left;
+    margin-right: 10px;
+    padding-bottom: 15px;
+}
+
+#toDo li, #inProgress li, #done li {
+    padding: 5px;
+    font-size: 1.2em;
+    border: 1px solid #808080;
+    width: 100%;
+    cursor: move;
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}
+
+#toDo li:active, #inProgress li:active, #done li:active {
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+}
+
+#toDo li:hover, #inProgress li:hover, #done li:hover {
+    background-color: #bdc1bf;
+}

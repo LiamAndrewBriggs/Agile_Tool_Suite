@@ -48,7 +48,7 @@
 
                 <ul class="sidebar-nav">
                     <li><a href="Backlog.aspx">Backlog</a></li>
-                    <li><a href="#">Projects</a></li>
+                    <li><a href="SprintBoard.aspx">Boards</a></li>
                     <li><a id="Account" href="AccountPage.aspx">Account</a></li>
                 </ul>
             </div>
