@@ -364,10 +364,10 @@ namespace Agile_Tool_Suite
 
                 conn.Open();
 
-                queryStr = "UPDATE agiledb.story SET sprintStatus = ?status WHERE storyID=?id";
+                queryStr = "UPDATE agiledb.story SET storyStatus = ?status WHERE storyID=?id";
 
                 cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
-                cmd.Parameters.AddWithValue("?status", "Sprint");
+                cmd.Parameters.AddWithValue("?status", "InProgress");
                 cmd.Parameters.AddWithValue("?id", storyID);
 
                 cmd.ExecuteReader();
@@ -408,11 +408,11 @@ namespace Agile_Tool_Suite
             {
                 conn.Open();
 
-                queryStr = "SELECT storyName FROM agiledb.story WHERE storyID=?id AND sprintStatus=?status";
+                queryStr = "SELECT storyName FROM agiledb.story WHERE storyID=?id AND storyStatus=?status";
 
                 cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
                 cmd.Parameters.AddWithValue("?id", storyID);
-                cmd.Parameters.AddWithValue("?status", "Backlog");
+                cmd.Parameters.AddWithValue("?status", "toDo");
 
                 reader = cmd.ExecuteReader();
 
@@ -440,15 +440,14 @@ namespace Agile_Tool_Suite
                 conn = SQL_Helpers.createConnection();
                 conn.Open();
 
-                queryStr = "INSERT INTO agiledb.story (storyName, storyStatus, storyPoints, storyDetail, sprintStatus) " +
+                queryStr = "INSERT INTO agiledb.story (storyName, storyStatus, storyPoints, storyDetail) " +
                     "VALUES(?name, ?status, ?points, ?detail, ?story)";
 
                 cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
                 cmd.Parameters.AddWithValue("?name", backlogItemName.Text);
-                cmd.Parameters.AddWithValue("?status", backlogItemStatus.SelectedValue);
+                cmd.Parameters.AddWithValue("?status", "toDo");
                 cmd.Parameters.AddWithValue("?points", backlogItemStoryPoints.SelectedValue);
                 cmd.Parameters.AddWithValue("?detail", backlogItemDescription.Text);
-                cmd.Parameters.AddWithValue("?story", "Backlog");
 
                 cmd.ExecuteReader();
                 conn.Close();
@@ -534,11 +533,11 @@ namespace Agile_Tool_Suite
                 backlogItemDescription.Text = reader.GetString(reader.GetOrdinal("storyDetail"));
 
 
-                if (reader.GetString(reader.GetOrdinal("sprintStatus")).Equals("Backlog"))
+                if (reader.GetString(reader.GetOrdinal("storyStatus")).Equals("toDo"))
                 {
                     registerBacklogButton.Visible = true;
                     backlogItemStoryPoints.Enabled = true;
-                    backlogItemStatus.Enabled = true;
+                    backlogItemStatus.Enabled = false;
                     backlogItemName.Enabled = true;
                     backlogItemDescription.Enabled = true;
                 }
@@ -546,7 +545,7 @@ namespace Agile_Tool_Suite
                 {
                     registerBacklogButton.Visible = false;
                     backlogItemStoryPoints.Enabled = false;
-                    backlogItemStatus.Enabled = false;
+                    backlogItemStatus.Enabled = true;
                     backlogItemName.Enabled = false;
                     backlogItemDescription.Enabled = false;
                 }

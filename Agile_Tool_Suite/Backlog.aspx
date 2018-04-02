@@ -158,7 +158,7 @@
             $('#sprintInput').hide();
 
             document.getElementById('<%=sprintStorieshf.ClientID%>').value = $("#sprintCreate").html();
-             $('#<%= createSprintButtons.ClientID %>').click();
+            $('#<%= createSprintButtons.ClientID %>').click();
         });
 
         $("#closeBacklog").click(function (e) {

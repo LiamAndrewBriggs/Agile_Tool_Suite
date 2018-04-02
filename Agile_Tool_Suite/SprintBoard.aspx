@@ -15,9 +15,9 @@
           <div class="col-sm-3"><h1 class="titles"> Done </h1></div>
         </div>
     </div>
-
-    <script>
-       
-     </script>
+    
+    <asp:HiddenField ID="selectedTaskID" runat="server" Value="null" />
+    <asp:HiddenField ID="taskDestination" runat="server" Value="null" />
+    <asp:Button ID = "saveBtn" runat = "server" OnClick = "saveSprintBoard" style = "display:none" />
 
 </asp:Content>

@@ -16,6 +16,7 @@ namespace Agile_Tool_Suite
             {
                 Session["project"] = project.SelectedValue.ToString();
                 string test = project.SelectedValue.ToString();
+                //Response.Redirect(Request.RawUrl);
             }
 
             if (user == null)

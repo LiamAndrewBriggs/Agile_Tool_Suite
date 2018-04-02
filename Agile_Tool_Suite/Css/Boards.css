@@ -12,6 +12,13 @@
     color: #4CAF50;
 }
 
+.userName {
+    pointer-events: none;
+    float: right;
+    font-size: small;
+    color: #4CAF50;
+}
+
 #table {
     margin-top: 15px;
 }
