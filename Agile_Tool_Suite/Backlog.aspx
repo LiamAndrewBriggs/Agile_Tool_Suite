@@ -4,8 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="head" runat="server">
     <link href="Css/Backlog.css" rel="stylesheet" />
-    <link href="Css/Theme.css" rel="stylesheet" />
-</asp:Content>
+ </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id="wrapper">
         <div id="mainContent">

@@ -12,7 +12,7 @@
           <div class="col-sm-3"><h1 class="titles"> Story </h1></div>
           <div class="col-sm-3"><h1 class="titles"> To Do </h1></div>
           <div class="col-sm-3"><h1 class="titles"> Doing </h1></div>
-          <div class="col-sm-3"><h1 class="titles"> Done </h1></div>
+          <div class="col-sm-3"><h1 class="titles"> Done  </h1></div>
         </div>
     </div>
     

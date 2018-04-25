@@ -153,6 +153,7 @@
     <Content Include="Css\Backlog.css" />
     <Content Include="Css\Boards.css" />
     <Content Include="Css\Main_Theme.css" />
+    <Content Include="Css\Help.css" />
     <Content Include="docs\MySqlCommand.xml" />
     <Content Include="docs\MySqlCommandBuilder.xml" />
     <Content Include="docs\MySqlConnection.xml" />
@@ -164,6 +165,7 @@
     <Content Include="docs\MySqlParameter.xml" />
     <Content Include="docs\MySqlParameterCollection.xml" />
     <Content Include="docs\MySqlTransaction.xml" />
+    <Content Include="HelpPage.aspx" />
     <Content Include="Master.Master" />
     <None Include="packages.config" />
     <Content Include="Css\Side_Bar.css" />
@@ -259,6 +261,13 @@
       <DependentUpon>Create_Project.aspx</DependentUpon>
     </Compile>
     <Compile Include="Helpers\SQL_Helpers.cs" />
+    <Compile Include="HelpPage.aspx.cs">
+      <DependentUpon>HelpPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HelpPage.aspx.designer.cs">
+      <DependentUpon>HelpPage.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Home.aspx.cs">
       <DependentUpon>Home.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

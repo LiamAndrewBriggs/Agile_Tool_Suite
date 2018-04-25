@@ -16,6 +16,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link href="Css/Side_Bar.css" rel="stylesheet" />
     <link href="Css/Main_Theme.css" rel="stylesheet" />
+    <link href="Css/Theme.css" rel="stylesheet" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -49,6 +50,7 @@
                 <ul class="sidebar-nav">
                     <li><a href="Backlog.aspx">Backlog</a></li>
                     <li><a href="SprintBoard.aspx">Boards</a></li>
+                    <li><a href="HelpPage.aspx">Agile Help</a></li>
                     <li><a id="Account" href="AccountPage.aspx">Account</a></li>
                 </ul>
             </div>

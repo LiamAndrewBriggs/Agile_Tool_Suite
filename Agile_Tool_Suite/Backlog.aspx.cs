@@ -177,6 +177,11 @@ namespace Agile_Tool_Suite
 
                     int daysLeft = days - Convert.ToInt32(Math.Ceiling(difference));
 
+                    if(daysLeft < 0)
+                    {
+
+                    }
+
                     HtmlGenericControl timeLeft = new HtmlGenericControl("p");
                     timeLeft.InnerText = "You started this sprint on: " + startDate + " you have " + daysLeft + " days till the sprint ends on: " + endDate.ToString("d/M/yyyy");
 
