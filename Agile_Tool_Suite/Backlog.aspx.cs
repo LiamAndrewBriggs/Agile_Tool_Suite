@@ -13,6 +13,7 @@ namespace Agile_Tool_Suite
         private string project;
         private string backlog;
         private string story;
+        private string currentSprint = "0";
 
         //SQL information
         MySql.Data.MySqlClient.MySqlConnection conn;
@@ -102,7 +103,7 @@ namespace Agile_Tool_Suite
 
             conn.Close();
 
-            if(activeSprint.Equals("0"))
+            if (activeSprint.Equals("0"))
             {
                 startSprintHide.Visible = true;
             }
@@ -126,119 +127,227 @@ namespace Agile_Tool_Suite
                 }
 
                 conn.Close();
-            }           
+            }
 
             int count = 1;
 
             foreach (string sprint in sprintIDs)
             {
-                HtmlGenericControl panel = new HtmlGenericControl("div");
-                panel.Attributes.Add("class", "panel panel-default");
+                string status = "";
 
-                HtmlGenericControl panelHeading = new HtmlGenericControl("div");
-                panelHeading.Attributes.Add("class", "panel-heading");
+                conn.Open();
 
-                HtmlGenericControl heading = new HtmlGenericControl("h4");
-                heading.Attributes.Add("class", "panel-title");
+                queryStr = "SELECT sprintStatus FROM agiledb.sprints WHERE sprintID=?sprintid";
 
-                HtmlGenericControl dataToggle = new HtmlGenericControl("a");
-                dataToggle.Attributes.Add("data-toggle", "collapse");
-                dataToggle.Attributes.Add("data-parent", "#sprintAccordian");
-                dataToggle.Attributes.Add("href", "#collapse" + count);
-                dataToggle.InnerText = "Sprint " + count;
+                cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
+                cmd.Parameters.AddWithValue("?sprintid", sprint);
 
-                if(activeSprint.Equals(sprint))
+                reader = cmd.ExecuteReader();
+
+                while (reader.HasRows && reader.Read())
                 {
-                    panelHeading.Attributes.Add("style", "background-color: #4CAF50!important");
+                    status = reader.GetString(reader.GetOrdinal("sprintStatus"));
                 }
 
-                sprintList.Items.Insert(count - 1, new ListItem("Sprint " + count, sprint));
+                conn.Close();
 
-                heading.Controls.Add(dataToggle);
-                panelHeading.Controls.Add(heading);
-                panel.Controls.Add(panelHeading);
-                
-                HtmlGenericControl content = new HtmlGenericControl("div");
-                content.Attributes.Add("id", "collapse" + count);
-                content.Attributes.Add("class", "panel-collapse collapse out");
-
-                HtmlGenericControl contentBody = new HtmlGenericControl("div");
-                contentBody.Attributes.Add("class", "panel-body");
-                
-                if (activeSprint.Equals(sprint))
+                if (!status.Equals("done"))
                 {
+                    HtmlGenericControl panel = new HtmlGenericControl("div");
+                    panel.Attributes.Add("class", "panel panel-default");
+
+                    HtmlGenericControl panelHeading = new HtmlGenericControl("div");
+                    panelHeading.Attributes.Add("class", "panel-heading");
+
+                    HtmlGenericControl heading = new HtmlGenericControl("h4");
+                    heading.Attributes.Add("class", "panel-title");
+
+                    HtmlGenericControl dataToggle = new HtmlGenericControl("a");
+                    dataToggle.Attributes.Add("data-toggle", "collapse");
+                    dataToggle.Attributes.Add("data-parent", "#sprintAccordian");
+                    dataToggle.Attributes.Add("href", "#collapse" + count);
+                    dataToggle.InnerText = "Sprint " + count;
+
                     int days = Convert.ToInt32(sprintLength) * 7;
 
-                    DateTime systemStartDate = Convert.ToDateTime(startDate);
+                    DateTime systemStartDate = DateTime.Now;
                     DateTime currentDate = DateTime.Now;
                     DateTime endDate = systemStartDate.AddDays(days);
 
-                    double difference = (currentDate - systemStartDate).TotalDays;
+                    int daysLeft = 0;
 
-                    int daysLeft = days - Convert.ToInt32(Math.Ceiling(difference));
-
-                    if(daysLeft < 0)
+                    if (activeSprint.Equals(sprint))
                     {
+                        systemStartDate = Convert.ToDateTime(startDate);
+                        currentSprint = sprint;
+                        double difference = (currentDate - systemStartDate).TotalDays;
 
+                        daysLeft = days - Convert.ToInt32(Math.Ceiling(difference));
+
+                        if (daysLeft < 0)
+                        {
+                            panelHeading.Attributes.Add("style", "background-color: #ff0000!important");
+                        }
+                        else
+                        {
+                            panelHeading.Attributes.Add("style", "background-color: #4CAF50!important");
+                        }
                     }
 
-                    HtmlGenericControl timeLeft = new HtmlGenericControl("p");
-                    timeLeft.InnerText = "You started this sprint on: " + startDate + " you have " + daysLeft + " days till the sprint ends on: " + endDate.ToString("d/M/yyyy");
+                    sprintList.Items.Insert(count - 1, new ListItem("Sprint " + count, sprint));
 
-                    HtmlGenericControl breakTag = new HtmlGenericControl("br");
+                    heading.Controls.Add(dataToggle);
+                    panelHeading.Controls.Add(heading);
+                    panel.Controls.Add(panelHeading);
 
-                    HtmlGenericControl header = new HtmlGenericControl("p");
-                    header.InnerText = "Stories: ";
+                    HtmlGenericControl content = new HtmlGenericControl("div");
+                    content.Attributes.Add("id", "collapse" + count);
+                    content.Attributes.Add("class", "panel-collapse collapse out");
 
-                    contentBody.Controls.Add(timeLeft);
-                    contentBody.Controls.Add(breakTag);
-                    contentBody.Controls.Add(breakTag);
-                    contentBody.Controls.Add(header);
+                    HtmlGenericControl contentBody = new HtmlGenericControl("div");
+                    contentBody.Attributes.Add("class", "panel-body");
+
+                    if (activeSprint.Equals(sprint))
+                    {
+                        bool completed = isSprintFinished(sprint);
+
+                        HtmlGenericControl timeLeft = new HtmlGenericControl("p");
+
+                        if (daysLeft < 0)
+                        {
+                            timeLeft.InnerText = "This sprint ended on: " + endDate.ToString("d/M/yyyy") + " please conduct the retrospective and planning then click the complete sprint button to begin the next one";
+                        }
+                        else if (completed)
+                        {
+                            timeLeft.InnerText = "All stories completed please conduct the retrospective and planning then click the complete sprint button to begin the next one";
+                        }
+                        else
+                        {
+                            timeLeft.InnerText = "You started this sprint on: " + startDate + " you have " + daysLeft + " days till the sprint ends on: " + endDate.ToString("d/M/yyyy");
+                        }
+
+
+                        HtmlGenericControl breakTag = new HtmlGenericControl("br");
+
+                        HtmlGenericControl header = new HtmlGenericControl("p");
+                        header.InnerText = "Stories: ";
+
+                        contentBody.Controls.Add(timeLeft);
+                        contentBody.Controls.Add(breakTag);
+                        contentBody.Controls.Add(breakTag);
+                        contentBody.Controls.Add(header);
+                    }
+                    else
+                    {
+                        contentBody.InnerText = "Stories: ";
+                    }
+
+                    List<string> storyIDs = getStoryIDs(sprint);
+
+                    HtmlGenericControl list = new HtmlGenericControl("ul");
+                    //list.Attributes.Add("class", "connectedSortable");
+                    list.Attributes.Add("id", "sprintView");
+
+                    foreach (string story in storyIDs)
+                    {
+                        conn.Open();
+
+                        queryStr = "SELECT storyName FROM agiledb.story WHERE storyID=?id";
+
+                        cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
+                        cmd.Parameters.AddWithValue("?id", story);
+
+                        reader = cmd.ExecuteReader();
+
+                        while (reader.HasRows && reader.Read())
+                        {
+                            HtmlGenericControl item = new HtmlGenericControl("li");
+                            item.Attributes.Add("class", "ui-state-default");
+                            item.Attributes.Add("id", "storyInfo");
+                            item.Attributes.Add("data-id", story);
+                            item.InnerText = reader.GetString(reader.GetOrdinal("storyName"));
+
+                            list.Controls.Add(item);
+                        }
+
+                        conn.Close();
+                    }
+
+                    contentBody.Controls.Add(list);
+                    content.Controls.Add(contentBody);
+                    panel.Controls.Add(content);
+                    sprintAccordian.Controls.Add(panel);
+
+                    count++;
                 }
-                else
+            }
+        }
+
+        protected bool isSprintFinished(String sprint)
+        {
+            List<string> stories = getStoryIDs(sprint);
+            List<string> tasks = new List<string>();
+
+            foreach (string story in stories)
+            {
+                conn.Open();
+
+                queryStr = "SELECT taskID FROM agiledb.storytasks WHERE storyID=?id";
+
+                cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
+                cmd.Parameters.AddWithValue("?id", story);
+
+                reader = cmd.ExecuteReader();
+
+                while (reader.HasRows && reader.Read())
                 {
-                    contentBody.InnerText = "Stories: ";
+                    tasks.Add(reader.GetString(reader.GetOrdinal("taskID")));
                 }
 
-                List<string> storyIDs = getStoryIDs(sprint);
+                conn.Close();
 
-                HtmlGenericControl list = new HtmlGenericControl("ul");
-                //list.Attributes.Add("class", "connectedSortable");
-                list.Attributes.Add("id", "sprintView");
-
-                foreach (string story in storyIDs)
+                foreach (string task in tasks)
                 {
+                    string status = "";
+
                     conn.Open();
 
-                    queryStr = "SELECT storyName FROM agiledb.story WHERE storyID=?id";
+                    queryStr = "SELECT taskStatus FROM agiledb.task WHERE taskID=?id";
 
                     cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
-                    cmd.Parameters.AddWithValue("?id", story);
+                    cmd.Parameters.AddWithValue("?id", task);
 
                     reader = cmd.ExecuteReader();
 
                     while (reader.HasRows && reader.Read())
                     {
-                        HtmlGenericControl item = new HtmlGenericControl("li");
-                        item.Attributes.Add("class", "ui-state-default");
-                        item.Attributes.Add("id", "storyInfo");
-                        item.Attributes.Add("data-id", story);
-                        item.InnerText = reader.GetString(reader.GetOrdinal("storyName"));
+                        status = reader.GetString(reader.GetOrdinal("taskStatus"));
+                    }
 
-                        list.Controls.Add(item);
+                    if(!status.Equals("done"))
+                    {
+                        return false;
                     }
 
                     conn.Close();
                 }
 
-                contentBody.Controls.Add(list);
-                content.Controls.Add(contentBody);
-                panel.Controls.Add(content);
-                sprintAccordian.Controls.Add(panel);
+                conn.Open();
 
-                count++;
+                queryStr = "UPDATE agiledb.story SET storyStatus = ?status WHERE storyID=?id";
+
+                cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
+                cmd.Parameters.AddWithValue("?status", "done");
+                cmd.Parameters.AddWithValue("?id", story);
+
+                cmd.ExecuteReader();
+                conn.Close();
+
             }
+            
+            return true;
         }
+
 
         protected List<string> getSprintIDs()
         {
@@ -379,7 +488,7 @@ namespace Agile_Tool_Suite
                 conn.Close();
             }
 
-            getBacklog();
+            Response.Redirect(Request.RawUrl);
         }
 
 
@@ -748,6 +857,98 @@ namespace Agile_Tool_Suite
             conn.Close();
 
             Response.Redirect(Request.RawUrl);
+        }
+
+        protected void endSprintButton(object sender, EventArgs e)
+        {
+           if(currentSprint.Equals("0"))
+           {
+                string alert = "No active sprint";
+                ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + alert + "');", true);
+           }
+           else
+           {
+                conn.Open();
+
+                queryStr = "UPDATE agiledb.sprints SET sprintStatus = ?status WHERE sprintID=?id";
+
+                cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
+                cmd.Parameters.AddWithValue("?status", "done");
+                cmd.Parameters.AddWithValue("?id", currentSprint);
+
+                cmd.ExecuteReader();
+
+                conn.Close();
+
+                conn.Open();
+
+                queryStr = "UPDATE agiledb.project SET activeSprint = ?sprint WHERE projectID=?id";
+
+                cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
+                cmd.Parameters.AddWithValue("?sprint", 0);
+                cmd.Parameters.AddWithValue("?id", project);
+
+                cmd.ExecuteReader();
+
+                conn.Close();
+
+                List<string> nonCompleted = getStoryIDs(currentSprint);
+                string result = "";
+
+                foreach(string story in nonCompleted)
+                {
+                    conn.Open();
+
+                    queryStr = "SELECT storyStatus FROM agiledb.story WHERE storyID=?id";
+
+                    cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
+                    cmd.Parameters.AddWithValue("?id", story);
+                    reader = cmd.ExecuteReader();
+
+                    while (reader.HasRows && reader.Read())
+                    {
+                        result = reader.GetString(reader.GetOrdinal("storyStatus"));
+                    }
+
+                    conn.Close();
+
+                    if(!result.Equals("done"))
+                    {
+                        conn.Open();
+
+                        queryStr = "UPDATE agiledb.story SET storyStatus = ?status WHERE storyID=?id";
+
+                        cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
+                        cmd.Parameters.AddWithValue("?status", "toDo");
+                        cmd.Parameters.AddWithValue("?id", story);
+
+                        cmd.ExecuteReader();
+                        conn.Close();
+
+                        List<string> tasks = new List<string>();
+
+                        conn.Open();
+
+                        queryStr = "SELECT taskID FROM agiledb.storytasks WHERE storyID=?id";
+
+                        cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
+                        cmd.Parameters.AddWithValue("?id", story);
+
+                        reader = cmd.ExecuteReader();
+
+                        while (reader.HasRows && reader.Read())
+                        {
+                            tasks.Add(reader.GetString(reader.GetOrdinal("taskID")));
+                        }
+
+                        conn.Close();
+
+                    }
+                }
+
+                Response.Redirect(Request.RawUrl);
+            }
+            
         }
 
         protected void viewTaskItem(object sender, EventArgs e)

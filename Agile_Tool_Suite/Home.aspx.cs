@@ -81,14 +81,18 @@ namespace Agile_Tool_Suite
                         }
                         else
                         {
-                            passwordTextBox.Text = "Wrong Password";
+                            errorMessage.Text = "Incorrect UserName/Password";
                         }
                     }
+                }
+                else
+                {
+                    errorMessage.Text = "Incorrect UserName/Password";
                 }
             }
             catch (Exception e)
             {
-                passwordTextBox.Text = e.ToString();
+                errorMessage.Text = e.ToString();
             }
         }
 

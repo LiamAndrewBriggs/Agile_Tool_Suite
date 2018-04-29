@@ -88,6 +88,8 @@ namespace Agile_Tool_Suite
                 cmd.ExecuteReader();
                 conn.Close();
 
+                conn.Open();
+
                 queryStr = "SELECT userID FROM agiledb.users ORDER BY userID DESC LIMIT 1";
 
                 cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);

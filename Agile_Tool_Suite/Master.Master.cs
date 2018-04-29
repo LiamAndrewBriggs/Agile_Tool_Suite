@@ -82,8 +82,6 @@ namespace Agile_Tool_Suite
                     projects.Add(new ListItem(reader.GetString(reader.GetOrdinal("projectName")), proj.ToString()));
                 }
 
-                projects.Add(new ListItem("Test", "19"));
-
                 if (Session["project"] == null)
                 {
                     Session["project"] = projectIDs[0];

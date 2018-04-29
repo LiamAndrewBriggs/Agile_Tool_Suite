@@ -10,34 +10,43 @@
 namespace Agile_Tool_Suite {
     
     
-    public partial class NewUser {
+    public partial class Projects {
         
         /// <summary>
-        /// form1 control.
+        /// ProjectName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.TextBox ProjectName;
         
         /// <summary>
-        /// LogoutButton control.
+        /// DdlMonths control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button LogoutButton;
+        protected global::System.Web.UI.WebControls.DropDownList DdlMonths;
         
         /// <summary>
-        /// userLabel control.
+        /// DropDownError control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label userLabel;
+        protected global::System.Web.UI.WebControls.Label DropDownError;
+        
+        /// <summary>
+        /// createButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button createButton;
         
         /// <summary>
         /// searchTextBox control.
@@ -65,14 +74,5 @@ namespace Agile_Tool_Suite {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label errorMessage;
-        
-        /// <summary>
-        /// createProject control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button createProject;
     }
 }

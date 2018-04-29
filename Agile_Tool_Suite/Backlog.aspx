@@ -9,10 +9,11 @@
     <div id="wrapper">
         <div id="mainContent">
             <div id="sprints">
+                <asp:Button id="endSprint" runat = "server" class="button" OnClick = "endSprintButton" Text="Complete Sprint" />
                 <button class="button" id="createSprint">Create Sprint</button>
                 <h2 class="titles">Sprints</h2>
                 <div id="startSprintHide" runat="server">
-                    <p style="margin-right:15px; color:#4CAF50; font-size:large">Chose the next sprint to start: </p>
+                    <p style="margin-right:15px; color:#4CAF50; font-size:large">Choose the next sprint to start: </p>
                     <asp:DropDownList ID="sprintList" class="info" runat="server">  </asp:DropDownList>
                     <asp:Button ID="startSprint" runat = "server" OnClick = "startSprintButton" Text="Start Sprint" />
                 </div>

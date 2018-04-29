@@ -23,6 +23,7 @@
             <p> Join a project using the code your Manager/Scrum master will give you</p>
             <asp:TextBox ID="searchTextBox" placeholder="Project Code" runat="server" class="nu_entry" />
             <asp:Button ID="searchProject" Text="Search" runat="server" OnClick="Search_Project" class="button"/>
+            <asp:Label ID="errorMessage" Text="" runat="server" class="errors"/>
             <p> Or create a project! </p>
             <asp:Button ID="createProject" Text="Create" runat="server" OnClick="Create_Project" class="button"/> 
         </div>

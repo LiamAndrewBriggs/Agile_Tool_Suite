@@ -16,8 +16,10 @@
         <asp:TextBox ID="usernameTextBox" placeholder="Username" runat="server" class="entry" />
         <p>Password</p>
         <asp:TextBox ID="passwordTextBox" placeholder="Password" runat="server" type="password" class="entry" />
+        <asp:Label ID="errorMessage" Text="" runat="server" class="errors"/>
         <br />
-        <asp:Button ID="submitButton" Text="Log in" runat="server" OnClick="LogInMethod" class="button"/> 
+        <br />
+        <asp:Button ID="submitButton" Text="Log in" runat="server" OnClick="LogInMethod" class="button"/>
         <br />
         <br />
         <a href="Registration.aspx">Sign Up</a>

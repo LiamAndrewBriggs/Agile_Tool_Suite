@@ -30,8 +30,7 @@ namespace Agile_Tool_Suite
                 cmd.Parameters.AddWithValue("?id", user);
 
                 MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
-
-                
+               
 
                 if (reader.HasRows && reader.Read())
                 {
