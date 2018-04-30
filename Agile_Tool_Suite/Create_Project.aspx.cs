@@ -9,6 +9,7 @@ namespace Agile_Tool_Suite
         protected void Page_Load(object sender, EventArgs e)
         {
             user = (string)(Session["uname"]);
+            user = "1";
             if (user == null)
             {
                 Response.BufferOutput = true;
@@ -30,7 +31,7 @@ namespace Agile_Tool_Suite
                 MySql.Data.MySqlClient.MySqlConnection conn = SQL_Helpers.createConnection();
                 conn.Open();
                 
-                string queryStr = "INSERT INTO agiledb.project(projectName, primaryMethodology, projectCreator) VALUES(?name, ?method, ?userName)";
+                string queryStr = "INSERT INTO agiledb.project(projectName, primaryMethodology, projectCreator, sprintLength, projectStartDate, projectEndDate) VALUES(?name, ?method, ?userName, ?length, ?startdate, ?enddate)";
 
                 MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
                 cmd.Parameters.AddWithValue("?name", name);
@@ -44,6 +45,10 @@ namespace Agile_Tool_Suite
                 {
                     cmd.Parameters.AddWithValue("?method", "Kanban");
                 }
+
+                cmd.Parameters.AddWithValue("?length", SprintLength.SelectedValue);
+                cmd.Parameters.AddWithValue("?startdate", DateTime.Now.ToString("d/M/yyyy"));
+                cmd.Parameters.AddWithValue("?enddate", datePicker.SelectedDate.ToString());
 
                 MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
 

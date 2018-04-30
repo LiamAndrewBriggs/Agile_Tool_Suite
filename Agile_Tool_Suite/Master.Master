@@ -51,6 +51,7 @@
                     <li><a href="Backlog.aspx">Backlog</a></li>
                     <li><a href="SprintBoard.aspx">Boards</a></li>
                     <li><a href="HelpPage.aspx">Agile Help</a></li>
+                    <li><a href="CompletedWork.aspx">Completed Work</a></li>
                     <li><a href="Projects.aspx">Projects</a></li>
                     <li><a id="Account" href="AccountPage.aspx">Account</a></li>
                 </ul>

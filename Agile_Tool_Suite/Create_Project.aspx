@@ -27,6 +27,15 @@
                 <asp:ListItem Text="Kanban" Value="2"></asp:ListItem>
             </asp:DropDownList>
             <asp:Label ID="DropDownError" Text="Please select a methodology" visible="false" class="error" runat="server" />
+            <p>Sprint Length (If applicable)</p>
+            <asp:DropDownList ID="SprintLength" class="info" runat="server"> 
+                <asp:ListItem Text="1 Week" Value="1"></asp:ListItem>
+                <asp:ListItem Text="2 Weeks" Value="2"></asp:ListItem>
+                <asp:ListItem Text="3 Weeks" Value="3"></asp:ListItem>
+                <asp:ListItem Text="4 Weeks" Value="4"></asp:ListItem>
+            </asp:DropDownList>
+            <p>Project End Date</p>
+            <asp:Calendar ID="datePicker" runat="server"></asp:Calendar>
             <br />
             <asp:Button ID="createButton" Text="Create" runat="server" OnClick="CreateProject" class="button" />
         </div>

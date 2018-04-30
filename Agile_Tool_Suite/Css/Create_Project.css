@@ -6,9 +6,9 @@
 .container {
     position: absolute;
     width: 300px;
-    height: 250px;
+    height: 550px;
     z-index: 15;
-    top: 40%;
+    top: 22%;
     left: 50%;
     margin: -100px 0 0 -150px;
     background-color: gainsboro;
@@ -24,6 +24,10 @@
 
 #createButton {
     right: 39%;
+}
+
+#datePicker{ 
+    margin-left:20px;
 }
 
 .error {

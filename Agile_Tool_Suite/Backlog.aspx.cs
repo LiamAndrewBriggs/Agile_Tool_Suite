@@ -12,6 +12,7 @@ namespace Agile_Tool_Suite
         private string user;
         private string project;
         private string backlog;
+        private string sprintLength;
         private string story;
         private string currentSprint = "0";
 
@@ -67,7 +68,7 @@ namespace Agile_Tool_Suite
             conn = SQL_Helpers.createConnection();
             conn.Open();
 
-            queryStr = "SELECT backlogID FROM agiledb.project WHERE projectID=?projid";
+            queryStr = "SELECT backlogID, sprintLength FROM agiledb.project WHERE projectID=?projid";
 
             cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
             cmd.Parameters.AddWithValue("?projid", project);
@@ -77,6 +78,7 @@ namespace Agile_Tool_Suite
             while (reader.HasRows && reader.Read())
             {
                 backlog = reader.GetString(reader.GetOrdinal("backlogID"));
+                sprintLength = reader.GetString(reader.GetOrdinal("sprintLength"));
             }
         }
 
@@ -427,7 +429,7 @@ namespace Agile_Tool_Suite
                 "VALUES(?length)";
 
             cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
-            cmd.Parameters.AddWithValue("?length", SprintLength.SelectedValue);
+            cmd.Parameters.AddWithValue("?length", sprintLength);  
 
             cmd.ExecuteReader();
             conn.Close();
@@ -894,12 +896,15 @@ namespace Agile_Tool_Suite
 
                 List<string> nonCompleted = getStoryIDs(currentSprint);
                 string result = "";
+                int points = 0;
 
                 foreach(string story in nonCompleted)
                 {
+                    string tempPoints = "0";
+
                     conn.Open();
 
-                    queryStr = "SELECT storyStatus FROM agiledb.story WHERE storyID=?id";
+                    queryStr = "SELECT storyStatus, storyPoints FROM agiledb.story WHERE storyID=?id";
 
                     cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
                     cmd.Parameters.AddWithValue("?id", story);
@@ -908,6 +913,7 @@ namespace Agile_Tool_Suite
                     while (reader.HasRows && reader.Read())
                     {
                         result = reader.GetString(reader.GetOrdinal("storyStatus"));
+                        tempPoints = reader.GetString(reader.GetOrdinal("storyPoints"));
                     }
 
                     conn.Close();
@@ -944,8 +950,23 @@ namespace Agile_Tool_Suite
                         conn.Close();
 
                     }
+                    else
+                    {
+                        points = points + Convert.ToInt32(tempPoints);
+                    }
                 }
 
+                conn.Open();
+
+                queryStr = "UPDATE agiledb.sprints SET pointsCompleted = ?points WHERE sprintID=?id";
+
+                cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
+                cmd.Parameters.AddWithValue("?points", points);
+                cmd.Parameters.AddWithValue("?id", currentSprint);
+
+                cmd.ExecuteReader();
+                conn.Close();
+                
                 Response.Redirect(Request.RawUrl);
             }
             

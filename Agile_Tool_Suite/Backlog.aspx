@@ -20,16 +20,7 @@
                 <div class="panel-group" id="sprintAccordian" runat="server"> </div>
                 <div id ="sprintInput" class="container-fluid">
                     <h3 class="titles">Create Sprint</h3>
-                    <button class="button" id="saveSprint">Save Sprint</button>
-                    <div class="container-fluid">
-                    <p>Sprint Length:   </p>
-                        <asp:DropDownList ID="SprintLength" class="info" runat="server"> 
-                            <asp:ListItem Text="1 Week" Value="1"></asp:ListItem>
-                            <asp:ListItem Text="2 Weeks" Value="2"></asp:ListItem>
-                            <asp:ListItem Text="3 Weeks" Value="3"></asp:ListItem>
-                            <asp:ListItem Text="4 Weeks" Value="4"></asp:ListItem>
-                         </asp:DropDownList>
-                    </div>
+                    <button class="button" id="saveSprint">Save Sprint</button>                    
                     <div class="container-fluid">
                         <p>Add Backlog Story To Sprint (drag story from the backlog):</p>
                         <ul id="sprintCreate" class="connectedSortable"> </ul>

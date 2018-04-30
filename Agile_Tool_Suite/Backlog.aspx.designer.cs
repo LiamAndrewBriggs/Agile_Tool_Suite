@@ -58,15 +58,6 @@ namespace Agile_Tool_Suite {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl sprintAccordian;
         
         /// <summary>
-        /// SprintLength control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList SprintLength;
-        
-        /// <summary>
         /// backlogList control.
         /// </summary>
         /// <remarks>
