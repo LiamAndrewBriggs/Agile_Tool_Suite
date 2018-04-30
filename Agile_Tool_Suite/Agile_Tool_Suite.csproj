@@ -159,6 +159,7 @@
     <Content Include="Css\Main_Theme.css" />
     <Content Include="Css\Help.css" />
     <Content Include="HelpPage.aspx" />
+    <Content Include="KanbanBoard.aspx" />
     <Content Include="Master.Master" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
@@ -234,6 +235,7 @@
     <Content Include="NewUser.aspx" />
     <Content Include="Registration.aspx" />
     <Content Include="SprintBoard.aspx" />
+    <Content Include="Swimlanes.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -282,6 +284,13 @@
     <Compile Include="Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>
     </Compile>
+    <Compile Include="KanbanBoard.aspx.cs">
+      <DependentUpon>KanbanBoard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="KanbanBoard.aspx.designer.cs">
+      <DependentUpon>KanbanBoard.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Master.Master.cs">
       <DependentUpon>Master.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -327,6 +336,13 @@
     </Compile>
     <Compile Include="SprintBoard.aspx.designer.cs">
       <DependentUpon>SprintBoard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Swimlanes.aspx.cs">
+      <DependentUpon>Swimlanes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Swimlanes.aspx.designer.cs">
+      <DependentUpon>Swimlanes.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

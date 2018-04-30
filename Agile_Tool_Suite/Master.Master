@@ -57,8 +57,8 @@
                 </ul>
 
                 <ul id="Kanban" runat="server" class="sidebar-nav">
-                    <li><a href="SprintBoard.aspx">Swimlanes And Tasks</a></li>
-                    <li><a href="SprintBoard.aspx">Kanban Board</a></li>
+                    <li><a href="Swimlanes.aspx">Swimlanes And Tasks</a></li>
+                    <li><a href="KanbanBoard.aspx">Kanban Board</a></li>
                     <li><a href="HelpPage.aspx">Agile Help</a></li>
                     <li><a href="Projects.aspx">Projects</a></li>
                     <li><a href="AccountPage.aspx">Account</a></li>

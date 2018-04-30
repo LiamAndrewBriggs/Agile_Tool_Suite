@@ -28,7 +28,7 @@
                 </div>
             </div>
 
-            <div id="backlog">
+            <div class="backlog">
                 <button class="button" id="createBacklogItem">Create Backlog Item</button>
                 <h2 class="titles">Backlog Stories</h2>
                 <div id="backlogList" class="backlogList" runat="server"> </div>
