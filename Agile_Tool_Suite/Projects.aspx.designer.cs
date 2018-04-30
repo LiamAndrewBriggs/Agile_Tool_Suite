@@ -40,6 +40,24 @@ namespace Agile_Tool_Suite {
         protected global::System.Web.UI.WebControls.Label DropDownError;
         
         /// <summary>
+        /// SprintLength control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList SprintLength;
+        
+        /// <summary>
+        /// datePicker control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Calendar datePicker;
+        
+        /// <summary>
         /// createButton control.
         /// </summary>
         /// <remarks>

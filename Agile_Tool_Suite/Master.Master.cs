@@ -15,8 +15,6 @@ namespace Agile_Tool_Suite
             if (IsPostBack)
             {
                 Session["project"] = project.SelectedValue.ToString();
-                string test = project.SelectedValue.ToString();
-                //Response.Redirect(Request.RawUrl);
             }
 
             if (user == null)
@@ -41,6 +39,8 @@ namespace Agile_Tool_Suite
             project.Items.AddRange(projectItems.ToArray());
 
             project.SelectedValue = (string)(Session["project"]);
+
+            showMenu();
         }
 
         List<ListItem> getProjects()
@@ -93,6 +93,37 @@ namespace Agile_Tool_Suite
             }
 
             return projects;
+        }
+
+        protected void showMenu()
+        {
+            string projectType = "";
+
+            MySql.Data.MySqlClient.MySqlConnection conn = SQL_Helpers.createConnection();
+            conn.Open();
+
+            string queryStr = "SELECT projectName FROM agiledb.project WHERE projectID=?id";
+
+            MySql.Data.MySqlClient.MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand(queryStr, conn);
+            cmd.Parameters.AddWithValue("?id", (string)(Session["project"]));
+
+            MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.HasRows && reader.Read())
+            {
+                projectType = reader.GetString(reader.GetOrdinal("projectName"));
+            }
+
+            if (projectType.Equals("Kanban"))
+            {
+                Scrum.Visible = false;
+                Kanban.Visible = true;
+            }
+            else
+            {
+                Scrum.Visible = true;
+                Kanban.Visible = false;
+            }
         }
 
         protected void LogoutMethod(object sender, EventArgs e)

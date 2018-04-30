@@ -136,6 +136,15 @@
                   within Scrum to make information visible. 
                   
                   <br /> <br />
+
+                  Burn-down Chart: a chart which shows the amount of work which is thought to remain 
+                  in a backlog. Time is shown on the horizontal axis and work remaining on the vertical 
+                  axis. As time progresses and items are drawn from the backlog and completed, a plot line 
+                  showing work remaining may be expected to fall. The amount of work may be assessed in any 
+                  of several ways such as user story points or task hours. 
+
+                  <br /> <br />
+
               </p>
 
               <div> Credit: <a href="https://www.scrum.org/resources/scrum-glossary"> https://www.scrum.org/resources/scrum-glossary </a> </div>

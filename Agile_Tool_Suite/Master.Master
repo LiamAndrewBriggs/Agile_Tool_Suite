@@ -47,13 +47,21 @@
                     <asp:DropDownList AutoPostBack="true" ID="project" class="info" runat="server"> </asp:DropDownList>
                 </div>
 
-                <ul class="sidebar-nav">
+                <ul id="Scrum" runat="server" class="sidebar-nav">
                     <li><a href="Backlog.aspx">Backlog</a></li>
-                    <li><a href="SprintBoard.aspx">Boards</a></li>
-                    <li><a href="HelpPage.aspx">Agile Help</a></li>
+                    <li><a href="SprintBoard.aspx">Scrum Board</a></li>
                     <li><a href="CompletedWork.aspx">Completed Work</a></li>
+                    <li><a href="HelpPage.aspx">Agile Help</a></li>
                     <li><a href="Projects.aspx">Projects</a></li>
-                    <li><a id="Account" href="AccountPage.aspx">Account</a></li>
+                    <li><a href="AccountPage.aspx">Account</a></li>
+                </ul>
+
+                <ul id="Kanban" runat="server" class="sidebar-nav">
+                    <li><a href="SprintBoard.aspx">Swimlanes And Tasks</a></li>
+                    <li><a href="SprintBoard.aspx">Kanban Board</a></li>
+                    <li><a href="HelpPage.aspx">Agile Help</a></li>
+                    <li><a href="Projects.aspx">Projects</a></li>
+                    <li><a href="AccountPage.aspx">Account</a></li>
                 </ul>
             </div>
 
